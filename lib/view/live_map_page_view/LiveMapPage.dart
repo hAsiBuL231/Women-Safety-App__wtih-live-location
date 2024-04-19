@@ -1,17 +1,20 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:shake/shake.dart';
 import 'package:get/get.dart';
 
+import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.resources/colours/app_colours.dart';
 import '../../.utils/Functions.dart';
 import '../../components/drawer.dart';
-import '../../view_models/live_map_page_model/location_model/Location_model.dart';
-import '../../view_models/live_map_page_model/sms_model/Sms_Model.dart';
+import '../../models/user_model.dart';
+import '../../view_models/home_page_model/location_model/Location_model.dart';
+import '../../view_models/home_page_model/sms_model/Sms_Model.dart';
+import '../../view_models/test.dart';
 import 'widgets/group_list_widget.dart';
 import 'widgets/radio_button_widget.dart';
 import 'widgets/security_code_widget.dart';
@@ -29,7 +32,7 @@ class _LiveMapPageState extends State<LiveMapPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final smsVm = Get.put(SmsModel());
-  final locationVM = Get.put(LocationModel());
+  final locationVM = Get.put(LocationViewModel());
 
   @override
   void initState() {
@@ -102,23 +105,18 @@ class _LiveMapPageState extends State<LiveMapPage> {
 
                 /// ///////////////////////////    Next Button   ///////////////////////////
 
-                /*ElevatedButton(onPressed: () => nextPage(const UserProfile(), context), child: const Text("Next Page")),
-                const SizedBox(height: 20),*/
-
-                /// ///////////////////////////    User Data   ///////////////////////////
-
-                /*Text("Shared name: $name"),
+                ElevatedButton(onPressed: () => nextPage(MapScreen(), context), child: const Text("Next Page")),
                 const SizedBox(height: 20),
 
-                ///
-
-                Selector<UserDataProvider, Users?>(
-                    selector: (_, provider) => provider.userData?.userData,
-                    builder: (_, userData, __) {
-                      return Text('Stored Data: ${userData!.name}');
-                    }),*/
-
-                /// ///////////////////////////    End   ///////////////////////////
+                // /// ///////////////////////////    User Data   ///////////////////////////
+                //
+                // Selector<UserDataProvider, Users?>(
+                //     selector: (_, provider) => provider.userData,
+                //     builder: (_, userData, __) {
+                //       return Text('Stored Data: ${userData!.name}');
+                //     }),
+                //
+                // /// ///////////////////////////    End   ///////////////////////////
                 const SizedBox(height: 30),
               ]),
             ),

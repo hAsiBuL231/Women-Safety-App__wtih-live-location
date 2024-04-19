@@ -7,6 +7,7 @@ import '../../.utils/Functions.dart';
 import '../../.utils/utils.dart';
 import '../../repository/login_repository/LoginRepository.dart';
 import '../../view/bottom_screens/BottomPage.dart';
+import '../user_view_model/UserViewModel.dart';
 
 class SignUpViewModel extends GetxController {
   final _api = LoginRepository();
@@ -38,6 +39,8 @@ class SignUpViewModel extends GetxController {
       LoginRepository repo = LoginRepository();
       var response = repo.registerApi(data, context);
       snackBar('Login successful', context);
+
+      UserViewModel().postUserApi(context);
 
       Get.delete<SignUpViewModel>();
       nextPage(const BottomPage(), context);

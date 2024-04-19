@@ -5,7 +5,9 @@ class AppUrl {
 
 
   //static const String baseUrl = "http://192.168.0.111:8000"; /// Mess Wifi
-  static const String baseUrl = "http://192.168.0.103:8000"; /// basha
+  static const String baseUrl = "http://192.168.0.108:8000"; /// basha
+  ///  192.168.42.172
+  //static const String baseUrl = "http://192.168.42.172:8000"; /// mobile
 
   //  --web-browser-flag "--disable-web-security"
   // python manage.py runserver 0.0.0.0:8000
@@ -18,7 +20,10 @@ class AppUrl {
 
   // static const String database = '$baseUrl/api';
 
-  static const String groupsUrl = '$baseUrl/groups/';
   static const String usersUrl = '$baseUrl/users/';
+  static const String groupsUrl = '$baseUrl/groups/';
+
+  static const String locationUrl = '$baseUrl/locations/';
+
 
 }

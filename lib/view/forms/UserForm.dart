@@ -12,7 +12,7 @@ class UserForm extends StatefulWidget {
 }
 
 class _UserFormState extends State<UserForm> {
-  final GlobalKey<FormState> formKey5 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // final userName = FirebaseAuth.instance.currentUser?.displayName;
   // final userEmail = FirebaseAuth.instance.currentUser?.email;
@@ -34,7 +34,7 @@ class _UserFormState extends State<UserForm> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: formKey5,
+          key: _formKey,
           child: Column(
             children: [
               const SizedBox(height: 16.0),

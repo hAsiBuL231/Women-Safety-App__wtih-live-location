@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
-import '../../models/group_models.dart';
+import '../../models/group_model.dart';
 
 class AddMemberForm extends StatefulWidget {
   final Group passedGroup;

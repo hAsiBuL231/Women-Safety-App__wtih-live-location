@@ -58,8 +58,9 @@ dependencies:
 
   # Google Maps
   google_maps_flutter: ^2.3.0
-  # location: ^5.0.3
   flutter_polyline_points: ^2.0.0
+  # location: ^6.0.1
+  # location_platform_interface: ^5.0.0-dev.3
   geolocator: ^11.0.0
   geocoding: ^3.0.0
   uuid: ^4.3.3
@@ -81,6 +82,9 @@ dependencies:
   telephony: ^0.2.0
   carousel_slider: ^4.1.1
   flutter_phone_direct_caller: ^2.1.1
+  contacts_service: ^0.6.3
+  sqflite: ^2.2.0+3
+
 
 dev_dependencies:
   flutter_test:

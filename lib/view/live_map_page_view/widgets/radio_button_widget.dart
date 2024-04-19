@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_women_safety_app/view_models/home_page_model/HomePageModel.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../.resources/colours/app_colours.dart';
-import '../../../view_models/live_map_page_model/LiveMapPageModel.dart';
+import '../../../view_models/home_page_model/location_model/listen_location.dart';
 
-final homePageVM = Get.put(LiveMapPageModel());
+final homePageVM = Get.put(HomePageModel());
+final listenLocationVM = Get.put(ListenLocationProvider());
 
 Widget radioButton(context) {
   return Obx(
@@ -20,9 +22,9 @@ Widget radioButton(context) {
           homePageVM.switchListTileValue.value = newValue;
           //setState(() => switchListTileValue = newValue);
           if (newValue == true) {
-            homePageVM.listenLocation(context);
+            listenLocationVM.listenLocation(context);
           } else {
-            homePageVM.stopListening();
+            listenLocationVM.stopListening();
           }
         },
         title: AutoSizeText('Enable Live Location',

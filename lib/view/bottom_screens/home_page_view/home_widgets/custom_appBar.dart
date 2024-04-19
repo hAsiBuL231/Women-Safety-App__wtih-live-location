@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap!(),
       child: Container(
-        decoration: BoxDecoration(color: Colors.orangeAccent, borderRadius: BorderRadius.circular(20)),
+        // decoration: BoxDecoration(color: Colors.orangeAccent, borderRadius: BorderRadius.circular(20)),
         child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 10, top: 5, bottom: 10),
             child: Text(

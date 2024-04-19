@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/.data/user_data_SharedPreferences/app_user_data.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../.utils/Functions.dart';
-import '../view_models/live_map_page_model/LiveMapPageModel.dart';
+import '../view_models/home_page_model/HomePageModel.dart';
 import 'Authentication/login_view/LoginPageView.dart';
 import 'bottom_screens/BottomPage.dart';
-import 'forms/UserForm.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,19 +23,19 @@ class _SplashScreenState extends State<SplashScreen> {
   Prefs prefs = Prefs();
 
   @override
-  Future<void> initState() async {
+  initState() {
     super.initState();
 
     try {
-      var userName = prefs.get(prefs.username) ?? '';
-      var token = prefs.get(prefs.token) ?? '';
-
-      if (token != '') {
-        final homePageVM = Get.put(LiveMapPageModel());
-        homePageVM.loadData(context).then((value) {
-          _startTimer();
-        });
-      }
+      // var userName = prefs.get(prefs.username) ?? '';
+      // var token = prefs.get(prefs.token) ?? '';
+      //
+      // if (token != '') {
+      final homePageVM = Get.put(HomePageModel());
+      homePageVM.loadData(context).then((value) {
+        _startTimer();
+      });
+      //}
     } catch (e) {
       showToast("Failed to get preferences: $e", error: true);
     }
@@ -50,8 +48,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  void _startTimer() {
+  Future<void> _startTimer() async {
     const oneSec = Duration(seconds: 1);
+
+    var userName = await prefs.get(prefs.username) ?? '';
+    var token = await prefs.get(prefs.token) ?? '';
+
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -59,9 +61,6 @@ class _SplashScreenState extends State<SplashScreen> {
           if (_progressValue == 1.0) {
             timer.cancel();
             _timer?.cancel();
-
-            var userName = prefs.get(prefs.username) ?? '';
-            var token = prefs.get(prefs.token) ?? '';
 
             if (token != '') {
               showToast('Welcome Back, $userName!');
@@ -85,8 +84,6 @@ class _SplashScreenState extends State<SplashScreen> {
             //     nextPage(const UserForm(), context);
             //   }
             // }
-            newPage(const LoginPageView(), context);
-            //newPage( const BottomPage(), context);
           } else {
             _progressValue += 0.2;
           }

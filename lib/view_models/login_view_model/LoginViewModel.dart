@@ -34,6 +34,19 @@ class LoginViewModel extends GetxController {
       "username": "Hasibul",
       "password": "123456"
     }*/
+
+/*
+    {
+    "email": "hossainhasibul2@gmail.com",
+    "name": "Md Hasibul Hossain",
+    "phone": 140140,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
+    "latitude": 12.25,
+    "longitude": 98.95,
+    "token": "bd4f4fbe433aa17ec3b4ecd0e2463f53147e0f0a"
+    }
+*/
+
     try {
       LoginRepository repo = LoginRepository();
       var response = await repo.loginApi(data, context);

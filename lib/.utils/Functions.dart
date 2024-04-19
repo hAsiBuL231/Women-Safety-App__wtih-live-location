@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_women_safety_app/.resources/colours/app_colours.dart';
 
-void nextPage(page, context) {
+void nextPage(Widget page, BuildContext context) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }
 
-void newPage(page, context) {
+void newPage(Widget page, BuildContext context) {
   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => page), (route) => false);
 }
 
@@ -29,11 +30,11 @@ snackBar(String message, context) {
   });
 }
 
-dialog(message, context) {
+dialogueBox(String message, BuildContext context) {
   return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(content: message, actions: [
+        return AlertDialog(title: Text(''), content: Text(message), actions: [
           ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Accept')),
           ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Reject'))
         ]);
@@ -53,6 +54,15 @@ showToast(String message, {bool error = false}) {
       webPosition: 'center',
       toastLength: Toast.LENGTH_SHORT,
       timeInSecForIosWeb: 3);
+}
+
+Widget progressIndicator(BuildContext context) {
+  return Center(
+      child: CircularProgressIndicator(
+    backgroundColor: AppColours.primaryColor,
+    color: Colors.red,
+    strokeWidth: 7,
+  ));
 }
 
 // timeFormat(Timestamp time) {

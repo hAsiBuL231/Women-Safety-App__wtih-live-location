@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../../.resources/colours/app_colours.dart';
-import '../../../models/user_models.dart';
+import '../../../models/user_model.dart';
 
 /// ///////////////////////////    Your security code   ///////////////////////////
 
@@ -48,7 +48,8 @@ Widget securityCodeView = Padding(
                             builder: (_, userData, __) {
                               if (userData != null) {
                                 return AutoSizeText("${userData.securityCode}",
-                                    maxLines: 1,
+                                    maxLines: 2,
+                                    softWrap: true,
                                     style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold, fontFamily: GoogleFonts.manrope.toString()));
                               }
                               return const Text("");

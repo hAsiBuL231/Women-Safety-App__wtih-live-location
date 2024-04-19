@@ -20,16 +20,18 @@ import 'package:uuid/uuid.dart'; // Import the uuid package
 // }
 
 // Generate and store the UUID on the user's device
-final String appId = Uuid().v4(); // Generate a new UUID
+final String appId = const Uuid().v4(); // Generate a new UUID
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? mapController;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
 
   @override
   void initState() {
@@ -54,7 +56,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Location Notes'),
+        title: const Text('Location Notes'),
       ),
       body: GoogleMap(
         onMapCreated: (GoogleMapController controller) {
@@ -62,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
         },
         onTap: _addNoteMarker,
         markers: _markers,
-        initialCameraPosition: CameraPosition(
+        initialCameraPosition: const CameraPosition(
           target: LatLng(0, 0), // Default initial position
           zoom: 17.5,
         ),
@@ -102,14 +104,14 @@ class _MapScreenState extends State<MapScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Note Details'),
+        title: const Text('Note Details'),
         content: Text(
           'Latitude: ${latLng.latitude}\nLongitude: ${latLng.longitude}\n\nNote: $noteText',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -156,22 +158,22 @@ class _NoteInputDialogState extends State<NoteInputDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add Note'),
+      title: const Text('Add Note'),
       content: TextField(
         controller: _textEditingController,
-        decoration: InputDecoration(labelText: 'Enter your note'),
+        decoration: const InputDecoration(labelText: 'Enter your note'),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
             String noteText = _textEditingController.text;
             Navigator.of(context).pop(noteText);
           },
-          child: Text('Add'),
+          child: const Text('Add'),
         ),
       ],
     );

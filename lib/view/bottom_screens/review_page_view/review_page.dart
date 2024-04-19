@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../../../components/PrimaryButton.dart';
-import '../../../../components/custom_textfield.dart';
-
+import '../../../components/buttons/PrimaryButton.dart';
+import '../../../components/text_fields/custom_textfield.dart';
 
 class ReviewPage extends StatefulWidget {
   const ReviewPage({super.key});
@@ -81,49 +79,52 @@ class _ReviewPageState extends State<ReviewPage> {
     return Scaffold(
       body: isSaving == true
           ? const Center(child: CircularProgressIndicator())
-          : SafeArea(
-              child: Column(
-                children: [
-                  const Text(
-                    "Recent Review by other",
-                    style: TextStyle(fontSize: 30, color: Colors.black),
-                  ),
-                  // Expanded(
-                  //   child: StreamBuilder(
-                  //     stream: FirebaseFirestore.instance
-                  //         .collection('reviews')
-                  //         .snapshots(),
-                  //     builder: (BuildContext context,
-                  //         AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //       if (!snapshot.hasData) {
-                  //         return const Center(child: CircularProgressIndicator());
-                  //       }
-                  //
-                  //       return ListView.builder(
-                  //         itemCount: snapshot.data!.docs.length,
-                  //         itemBuilder: (BuildContext context, int index) {
-                  //           final data = snapshot.data!.docs[index];
-                  //           return Padding(
-                  //             padding: const EdgeInsets.all(3.0),
-                  //             child: Card(
-                  //               elevation: 10,
-                  //               // color: Colors.primaries[Random().nextInt(17)],
-                  //               child: ListTile(
-                  //                 title: Text(
-                  //                   data['location'],
-                  //                   style: const TextStyle(
-                  //                       fontSize: 20, color: Colors.black),
-                  //                 ),
-                  //                 subtitle: Text(data['views']),
-                  //               ),
-                  //             ),
-                  //           );
-                  //         },
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                ],
+          : const SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Text(
+                      "Recent Review by other",
+                      style: TextStyle(fontSize: 30, color: Colors.black),
+                    ),
+                    // Expanded(
+                    //   child: StreamBuilder(
+                    //     stream: FirebaseFirestore.instance
+                    //         .collection('reviews')
+                    //         .snapshots(),
+                    //     builder: (BuildContext context,
+                    //         AsyncSnapshot<QuerySnapshot> snapshot) {
+                    //       if (!snapshot.hasData) {
+                    //         return const Center(child: CircularProgressIndicator());
+                    //       }
+                    //
+                    //       return ListView.builder(
+                    //         itemCount: snapshot.data!.docs.length,
+                    //         itemBuilder: (BuildContext context, int index) {
+                    //           final data = snapshot.data!.docs[index];
+                    //           return Padding(
+                    //             padding: const EdgeInsets.all(3.0),
+                    //             child: Card(
+                    //               elevation: 10,
+                    //               // color: Colors.primaries[Random().nextInt(17)],
+                    //               child: ListTile(
+                    //                 title: Text(
+                    //                   data['location'],
+                    //                   style: const TextStyle(
+                    //                       fontSize: 20, color: Colors.black),
+                    //                 ),
+                    //                 subtitle: Text(data['views']),
+                    //               ),
+                    //             ),
+                    //           );
+                    //         },
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
       floatingActionButton: FloatingActionButton(

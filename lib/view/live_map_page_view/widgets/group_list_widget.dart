@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +12,9 @@ import '../../../.resources/app_url/AppUrl.dart';
 import '../../../.resources/colours/app_colours.dart';
 import '../../../.utils/Functions.dart';
 import '../../../components/list_tile.dart';
-import '../../../models/group_models.dart';
+import '../../../models/group_model.dart';
 import '../../forms/CreateGroupForm.dart';
-import '../../group_page_view/group_page_view.dart';
+import '../group_page_view/group_page_view.dart';
 
 /// ///////////////////////////    Create new Group   ///////////////////////////
 Widget groupListWidget(BuildContext context) {
@@ -35,47 +37,48 @@ Widget groupListWidget(BuildContext context) {
 
       /// ///////////////////////////    Group List from firebase ///////////////////////////
 
-      // FutureBuilder(
-      //   future: NetworkApiServices().getApi("${AppUrl.userCollectionUrl}/${userProvider.userData?.securityCode}/group"),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator());
-      //     if (!snapshot.hasData) return Center(child: Text(snapshot.error.toString()));
-      //
-      //     var groups = snapshot.data['documents'];
-      //     print(" \n \n \n groupListWidget Snapshot:          ${snapshot.data.toString()}");
-      //
-      //     if (groups == null) {
-      //       return Center(
-      //           child: Padding(
-      //         padding: const EdgeInsets.all(8.0),
-      //         child: Text("No group", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: GoogleFonts.aboreto.toString())),
-      //       ));
-      //     }
-      //
-      //     return Padding(
-      //       padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-      //       child: ListView.builder(
-      //         physics: const NeverScrollableScrollPhysics(),
-      //         shrinkWrap: true,
-      //         itemCount: groups.length,
-      //         itemBuilder: (context, index) {
-      //           print(" \n \n \n groupListWidget groups[index]:      ${groups[index]}");
-      //
-      //           Group group = Group.fromJson(groups[index]);
-      //           //print(" \n \n \n itemBuilder:      ${group.toJson()}");
-      //
-      //           String? gId = group.groupId;
-      //           String? gName = group.name.toString();
-      //           String? gImage = group.image.toString();
-      //           String? gIdlistlenght = group.idList.length.toString();
-      //
-      //           return customListTile(
-      //               title: gName, subTitle: 'Members: $gIdlistlenght', imageUrl: gImage, onPress: () => nextPage(GroupViewWidget(passedGroup: group), context));
-      //         },
-      //       ),
-      //     );
-      //   },
-      // ),
+      FutureBuilder(
+        future: NetworkApiServices().getApi("${AppUrl.usersUrl}${userProvider.userData?.securityCode}/groups/"),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator());
+          if (!snapshot.hasData) return Center(child: Text(snapshot.error.toString()));
+
+          // var groups = snapshot.data['documents'];
+          var groups = snapshot.data;
+          print(" \n \n \n groupListWidget Snapshot:          ${snapshot.data}");
+
+          if (groups == null) {
+            return Center(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("No group", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: GoogleFonts.aboreto.toString())),
+            ));
+          }
+
+          return Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: groups.length,
+              itemBuilder: (context, index) {
+                print(" \n \n \n groupListWidget groups[index]:      ${groups[index]}");
+
+                Group group = Group.fromJson(groups[index]);
+                //print(" \n \n \n itemBuilder:      ${group.toJson()}");
+
+                String? gId = group.groupId;
+                String? gName = group.name.toString();
+                String? gImage = group.imageUrl.toString();
+                String? gLength = group.users.length.toString();
+
+                return customListTile(
+                    title: gName, subTitle: 'Members: $gLength', imageUrl: gImage, onPress: () => nextPage(GroupPageView(passedGroup: group), context));
+              },
+            ),
+          );
+        },
+      ),
     ]);
   } else {
     return const Text("Something is wrong!");

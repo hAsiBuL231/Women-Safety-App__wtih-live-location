@@ -31,21 +31,21 @@ class _HomePageViewState extends State<HomePageView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(children: [
             /// CustomAppBar
-            //SizedBox(height: 10, child: Container(color: Colors.grey.shade100)),
+            SizedBox(height: 10, child: Container(color: Colors.grey.shade100)),
             const SizedBox(height: 10),
             CustomAppBar(quoteIndex: qIndex, onTap: () => getRandomQuote()),
             const SizedBox(height: 5),
-            //SizedBox(height: 10, child: Container(color: Colors.grey.shade100)),
+            SizedBox(height: 10, child: Container(color: Colors.grey.shade100)),
 
             /// CustomAppBar
 
             Expanded(
               child: ListView(shrinkWrap: true, children: [
                 const SizedBox(height: 10),
-                /*const Align(
+                const Align(
                   alignment: Alignment.center,
                   child: Padding(padding: EdgeInsets.all(8.0), child: Text("In case of emergency dial me", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-                ),*/
+                ),
 
                 /// EmergencyWidget
                 const EmergencyWidget(),

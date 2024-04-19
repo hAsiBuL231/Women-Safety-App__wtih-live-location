@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../.utils/Functions.dart';
 import '../view/Authentication/login_view/LoginPageView.dart';
 import '../view/bottom_screens/BottomPage.dart';
-import '../view/user_view/user_profile.dart';
+import '../view/user_view/user_data_view.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -120,7 +120,7 @@ class DrawerWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
                       child: InkWell(
-                        onTap: () => nextPage(const UserProfile(), context),
+                        onTap: () => nextPage(const UsersList(), context),
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),

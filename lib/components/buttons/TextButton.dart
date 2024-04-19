@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SecondaryButton extends StatelessWidget {
+class SecondaryTextButton extends StatelessWidget {
   final String title;
   final Function onPressed;
 
-  const SecondaryButton(
-      {super.key, required this.title, required this.onPressed});
+  const SecondaryTextButton({super.key, required this.title, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +13,7 @@ class SecondaryButton extends StatelessWidget {
           onPressed: () {
             onPressed();
           },
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 18),
-          )),
+          child: Text(title, style: const TextStyle(fontSize: 18))),
     );
   }
 }

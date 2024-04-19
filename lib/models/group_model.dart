@@ -1,3 +1,5 @@
+import 'package:flutter_women_safety_app/models/user_model.dart';
+
 class Group {
   String groupId;
   String name;
@@ -12,17 +14,27 @@ class Group {
   });
 
   factory Group.fromJson(Map<String, dynamic> json) {
+    // List<Users> userList = [];
+    // for (var user in json['users']) {
+    //   user['securityCode'] = user['url'];
+    //   user.remove('url');
+    //   print(user);
+    //   Users u = Users.fromJson(user);
+    //   userList.add(u);
+    // }
+
     return Group(
-      groupId: json['groupId'],
+      groupId: json['url'],
       name: json['name'],
       imageUrl: json['imageUrl'],
       users: List<String>.from(json['users']),
+      // users: userList,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'groupId': groupId,
+      'url': groupId,
       'name': name,
       'imageUrl': imageUrl,
       'users': users,

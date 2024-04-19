@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/user_models.dart';
+import '../../models/user_model.dart';
 
 // class shared_Preferences {
 class Prefs {
@@ -10,7 +10,6 @@ class Prefs {
   String token = "token";
   String email = "email";
   String pass = "password";
-
 
   // Future<String> getName() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();

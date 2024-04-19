@@ -80,8 +80,8 @@ class LoginPageViewState extends State<LoginPageView> {
                       controller: loginVM.passwordController.value,
                       focusNode: loginVM.passwordFocusNode.value,
                       validator: (input) {
-                        if (input!.length < 8) {
-                          return 'Your password needs to be at least 8 character';
+                        if (input!.length < 4) {
+                          return 'Your password needs to be at least 4 character';
                         }
                         return null;
                       },

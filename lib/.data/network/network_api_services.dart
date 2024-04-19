@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'base_api_services.dart';
 import 'package:http/http.dart' as http;
 import '../app_exceptions.dart';
+import '../../.utils/Functions.dart';
 
 class NetworkApiServices extends BaseApiServices {
   @override
@@ -13,11 +14,11 @@ class NetworkApiServices extends BaseApiServices {
     try {
       final response = await http.get(Uri.parse(url)).timeout(Duration(seconds: 10));
       if (kDebugMode) {
-        print("\n /////////////////////////////////////////////// NetworkApiServices Printing ////////////////////////// \n ");
+        print("\n /////////////////////////////////////////////// NetworkApiServices GetApi Printing ////////////////////////// \n ");
         print("Passed url: $url");
         print("Returned statusCode: ${response.statusCode} \n");
         print(response.body);
-        print("\n /////////////////////////////////////////////// NetworkApiServices Printing ////////////////////////// \n ");
+        print("\n /////////////////////////////////////////////// NetworkApiServices GetApi Printing ////////////////////////// \n ");
       }
       return returnResponse(response);
     } catch (e) {
@@ -65,12 +66,100 @@ class NetworkApiServices extends BaseApiServices {
       ).timeout(Duration(seconds: 10));
 
       if (kDebugMode) {
-        print("\n /////////////////////////////////////////////// NetworkApiServices Printing ////////////////////////// \n ");
+        print("\n /////////////////////////////////////////////// NetworkApiServices PostApi Printing ////////////////////////// \n ");
         print("Passed url: $url");
         print("Passed data: $data \n ");
         print("Returned statusCode: ${response.statusCode} \n");
         print(response.body);
-        print("\n /////////////////////////////////////////////// NetworkApiServices Printed ////////////////////////// \n ");
+        print("\n /////////////////////////////////////////////// NetworkApiServices PostApi Printed ////////////////////////// \n ");
+      }
+      jsonResponse = returnResponse(response);
+    } on SocketException {
+      throw InternetExceptions('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+
+    return jsonResponse;
+  }
+
+  @override
+  Future putApi(dynamic data, String url) async {
+    dynamic jsonResponse;
+    try {
+      //final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(Duration(seconds: 10));
+      final response = await http.put(
+        Uri.parse(url),
+        body: data,
+        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
+      ).timeout(Duration(seconds: 10));
+
+      if (kDebugMode) {
+        print("\n /////////////////////////////////////////////// NetworkApiServices PutApi Printing ////////////////////////// \n ");
+        print("Passed url: $url");
+        print("Passed data: $data \n ");
+        print("Returned statusCode: ${response.statusCode} \n");
+        print(response.body);
+        print("\n /////////////////////////////////////////////// NetworkApiServices PutApi Printed ////////////////////////// \n ");
+      }
+      jsonResponse = returnResponse(response);
+    } on SocketException {
+      throw InternetExceptions('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+
+    return jsonResponse;
+  }
+
+  @override
+  Future patchApi(String url, dynamic data) async {
+    dynamic jsonResponse;
+    try {
+      //final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(Duration(seconds: 10));
+      final response = await http.patch(
+        Uri.parse(url),
+        body: data,
+        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
+      ).timeout(Duration(seconds: 10));
+
+      if (kDebugMode) {
+        print("\n /////////////////////////////////////////////// NetworkApiServices PatchApi Printing ////////////////////////// \n ");
+        print("Passed url: $url");
+        print("Passed data: $data \n ");
+        print("Returned statusCode: ${response.statusCode} \n");
+        print(response.body);
+        print("\n /////////////////////////////////////////////// NetworkApiServices PatchApi Printed ////////////////////////// \n ");
+      }
+      jsonResponse = returnResponse(response);
+    } on SocketException {
+      throw InternetExceptions('');
+    } on RequestTimeOut {
+      throw RequestTimeOut('');
+    }
+
+    return jsonResponse;
+  }
+
+  @override
+  Future deleteApi(dynamic data, String url) async {
+    dynamic jsonResponse;
+    try {
+      //final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(Duration(seconds: 10));
+      final response = await http
+          .delete(
+            Uri.parse(url),
+            // body: data,
+            // headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
+          )
+          .timeout(Duration(seconds: 10));
+
+      if (kDebugMode) {
+        print("\n /////////////////////////////////////////////// NetworkApiServices DeleteApi Printing ////////////////////////// \n ");
+        print("Passed url: $url");
+        print("Returned statusCode: ${response.statusCode} \n");
+        print(response.body);
+        print("\n /////////////////////////////////////////////// NetworkApiServices DeleteApi Printed ////////////////////////// \n ");
       }
       jsonResponse = returnResponse(response);
     } on SocketException {
@@ -87,6 +176,12 @@ class NetworkApiServices extends BaseApiServices {
       case 200:
         // print("response.statusCode,,,, case == 200");
         dynamic responseJson = jsonDecode(response.body);
+        showToast("Get Api call successful");
+        return responseJson;
+      case 201:
+        // print("response.statusCode,,,, case == 200");
+        dynamic responseJson = jsonDecode(response.body);
+        showToast("Post Api call successful");
         return responseJson;
       case 400:
         dynamic responseJson = jsonDecode(response.body);
