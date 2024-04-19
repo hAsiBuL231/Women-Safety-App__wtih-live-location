@@ -43,6 +43,13 @@ class _UserViewState extends State<UserView> {
     // getUser();
   }
 
+  void refreshScreen() {
+    // Implement your refresh logic here
+    setState(() {
+      // Update state or reload data
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // final user = UserData.myUser;
@@ -78,8 +85,8 @@ class _UserViewState extends State<UserView> {
                           imagePath: user.imageUrl,
                           onPressed: () {},
                         )),
-                    buildUserInfoDisplay(user.name, 'Name', const EditNameFormPage(), context),
-                    buildUserInfoDisplay("${user.phone}", 'Phone', const EditPhoneFormPage(), context),
+                    buildUserInfoDisplay(user.name, 'Name', EditNameFormPage(refreshCallback: refreshScreen), context),
+                    buildUserInfoDisplay("${user.phone}", 'Phone', EditPhoneFormPage(refreshCallback: refreshScreen), context),
                     buildUserInfoDisplay(user.email, 'Email', const EditEmailFormPage(), context),
                     // Expanded(flex: 4, child: buildAbout(user)),
                     const SizedBox(height: 100),
@@ -94,7 +101,19 @@ class _UserViewState extends State<UserView> {
             );
           }
           // return const Center(child: CircularProgressIndicator());
-          return Center(child: Text("${snapshot.error}"));
+          return Center(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text("${snapshot.error}"),
+              const SizedBox(height: 60),
+              SecondaryButton(
+                  title: "Logout",
+                  onPressed: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.clear();
+                    newPage(const LoginPageView(), context);
+                  })
+            ]),
+          );
         });
   }
 }

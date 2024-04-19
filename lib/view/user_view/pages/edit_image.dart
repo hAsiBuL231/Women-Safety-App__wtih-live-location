@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import '../user/user_data.dart';
-import '../widgets/appbar_widget.dart';
 
 class EditImagePage extends StatefulWidget {
   const EditImagePage({Key? key}) : super(key: key);
@@ -20,7 +19,12 @@ class _EditImagePageState extends State<EditImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        leading: const BackButton(),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         const SizedBox(
             width: 330,

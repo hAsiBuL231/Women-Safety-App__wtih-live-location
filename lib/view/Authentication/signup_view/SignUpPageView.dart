@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../../../.utils/Functions.dart';
 import '../../../.utils/utils.dart';
 import '../../../view_models/signup_view_model/SignUpViewModel.dart';
@@ -48,8 +47,17 @@ class _SignUpPageViewState extends State<SignUpPageView> {
                       controller: signUpVM.usernameController.value,
                       focusNode: signUpVM.usernameFocusNode.value,
                       validator: (value) {
-                        if (value == null) {
-                          return 'Please enter a valid username';
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a username';
+                        }
+                        if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
+                          return 'Username can only contain letters, numbers, and underscores';
+                        }
+                        if (value.length < 3) {
+                          return 'Username must be at least 3 characters long';
+                        }
+                        if (value.length > 20) {
+                          return 'Username must be at most 20 characters long';
                         }
                         return null;
                       },
@@ -67,13 +75,13 @@ class _SignUpPageViewState extends State<SignUpPageView> {
                       controller: signUpVM.emailController.value,
                       focusNode: signUpVM.emailFocusNode.value,
                       validator: (value) {
-                        /*if (value!.contains('@gmail.com')) {
-                          return null;
-                        }*/
+                        // if (value!.contains('@gmail.com')) {
+                        //   return null;
+                        // }
                         if (value!.isEmail) {
                           return null;
                         }
-                        return 'Please enter a valid Gmail!';
+                        return 'Please enter a valid Email!';
                       },
                       //onChanged: (value) => _email = value,
                       onFieldSubmitted: (value) => Utils.fieldFocusChange(context, signUpVM.emailFocusNode.value, signUpVM.passwordFocusNode.value),

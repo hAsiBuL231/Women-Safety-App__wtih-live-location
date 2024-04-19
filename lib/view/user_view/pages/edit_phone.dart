@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/.utils/Functions.dart';
 import 'package:flutter_women_safety_app/view/user_view/UserView.dart';
+import '../../../view_models/user_view_model/UserViewModel.dart';
 import '../user/user_data.dart';
-import '../widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
 class EditPhoneFormPage extends StatefulWidget {
-  const EditPhoneFormPage({Key? key}) : super(key: key);
+  final VoidCallback refreshCallback;
+
+  const EditPhoneFormPage({super.key, required this.refreshCallback});
   @override
   EditPhoneFormPageState createState() {
     return EditPhoneFormPageState();
@@ -41,13 +43,19 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
     String formattedPhoneNumber = "(" + phone.substring(0, 3) + ") " + phone.substring(3, 6) + "-" + phone.substring(6, phone.length);
     // user.phone = formattedPhoneNumber as int;
     user.phone = int.parse(phone);
+    UserViewModel().patchUserPhoneApi(user.phone);
     UserData.setUser(user);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          leading: const BackButton(),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -93,7 +101,8 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                             if (_formKey.currentState!.validate() /*&& isNumeric(phoneController.text)*/) {
                               updateUserValue(phoneController.text);
                               Navigator.pop(context);
-                              nextPage(const UserView(), context);
+                              widget.refreshCallback();
+                              //nextPage(const UserView(), context);
                             }
                           },
                           child: const Text(

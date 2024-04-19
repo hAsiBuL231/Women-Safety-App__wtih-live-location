@@ -72,8 +72,7 @@ Widget groupListWidget(BuildContext context) {
                 String? gImage = group.imageUrl.toString();
                 String? gLength = group.users.length.toString();
 
-                return customListTile(
-                    title: gName, subTitle: 'Members: $gLength', imageUrl: gImage, onPress: () => nextPage(GroupPageView(passedGroup: group), context));
+                return customListTile(title: gName, subTitle: 'Members: $gLength', imageUrl: gImage, onPress: () => nextPage(GroupPageView(passedGroup: group), context));
               },
             ),
           );

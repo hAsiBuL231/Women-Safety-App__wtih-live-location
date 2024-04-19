@@ -4,7 +4,6 @@ import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
 import 'package:http/http.dart' as http;
 
-
 class UserViewModel extends GetxController {
   final _api = UserRepository();
 
@@ -35,10 +34,10 @@ class UserViewModel extends GetxController {
 
     // loading.value = true;
     Map data = {
-      "securityCode": token,
+      "token": token,
       "email": email,
       "name": "Please enter your name",
-      "phone": "Please enter your phone number",
+      "phone": 018,
       // "email": emailController.value.text,
       // "name": nameController.value.text,
       // "phone": phoneController.value.text,
@@ -55,7 +54,7 @@ class UserViewModel extends GetxController {
       // nextPage(const BottomPage(), context);
       // showToast(response, error: false);
     } catch (e) {
-      showToast("sf: ${e.toString()}", error: true);
+      showToast("postUserApi: ${e.toString()}", error: true);
     }
 
     loading.value = false;
@@ -79,32 +78,28 @@ class UserViewModel extends GetxController {
     }
 */
 
-  Future<void> patchUserApi(int phone) async {
+  Future<void> patchUserPhoneApi(int phone) async {
     Prefs prefs = Prefs();
     String token = await prefs.get(prefs.token);
-    String email = await prefs.get(prefs.email);
-    // loading.value = true;
 
-    Map data = {
-      // "securityCode": token,
-      // "email": email,
-      // "name": "fhjeffef",
-      "phone": "$phone"
-      // "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
-    };
+    Map data = {"phone": "$phone"};
 
     try {
       var response = await _api.patchUserApi(data);
       // snackBar('User data update successful', context);
-
-      // Get.delete<UserViewModel>();
-      // nextPage(const BottomPage(), context);
-      // showToast(response, error: false);
     } catch (e) {
-      showToast("sfdsdsd: ${e.toString()}", error: true);
+      showToast("patchUserPhoneApi: ${e.toString()}", error: true);
     }
+  }
 
-    loading.value = false;
+  Future<void> patchUserNameApi(String name) async {
+    Map data = {"name": name};
+
+    try {
+      var response = await _api.patchUserApi(data);
+    } catch (e) {
+      showToast("patchUserNameApi: ${e.toString()}", error: true);
+    }
   }
 
 /*

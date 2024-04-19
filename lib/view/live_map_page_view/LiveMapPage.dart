@@ -3,18 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 import 'package:shake/shake.dart';
 import 'package:get/get.dart';
 
-import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.resources/colours/app_colours.dart';
 import '../../.utils/Functions.dart';
 import '../../components/drawer.dart';
-import '../../models/user_model.dart';
-import '../../view_models/home_page_model/location_model/Location_model.dart';
 import '../../view_models/home_page_model/sms_model/Sms_Model.dart';
-import '../../view_models/test.dart';
+import '../../view_models/map_view_models/location_model/Location_model.dart';
 import 'widgets/group_list_widget.dart';
 import 'widgets/radio_button_widget.dart';
 import 'widgets/security_code_widget.dart';
@@ -63,6 +59,7 @@ class _LiveMapPageState extends State<LiveMapPage> {
     );
   }
 
+
   Future<void> _refreshData() async {
     setState(() {});
   }
@@ -105,8 +102,8 @@ class _LiveMapPageState extends State<LiveMapPage> {
 
                 /// ///////////////////////////    Next Button   ///////////////////////////
 
-                ElevatedButton(onPressed: () => nextPage(MapScreen(), context), child: const Text("Next Page")),
-                const SizedBox(height: 20),
+                // ElevatedButton(onPressed: () => nextPage(MapScreen(), context), child: const Text("Next Page")),
+                // const SizedBox(height: 20),
 
                 // /// ///////////////////////////    User Data   ///////////////////////////
                 //

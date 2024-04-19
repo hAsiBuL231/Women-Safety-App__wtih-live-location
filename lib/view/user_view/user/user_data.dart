@@ -24,8 +24,6 @@ class UserData {
     await init();
     final json = jsonEncode(user.toJson());
     await _preferences.setString(_keyUser, json);
-
-    UserViewModel().patchUserApi(user.phone);
   }
 
   static Future<Users> getUser() async {

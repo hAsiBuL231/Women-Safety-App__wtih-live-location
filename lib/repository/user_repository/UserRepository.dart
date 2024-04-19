@@ -47,15 +47,15 @@ class UserRepository {
     // String? securityCode = UserDataProvider().userData?.securityCode;
 
     String jsonData = json.encode(data);
-    dynamic response = await _apiServices.postApi("${AppUrl.usersUrl}/$token", data);
+    dynamic response = await _apiServices.postApi(jsonData, AppUrl.usersUrl);
     String jsonResponse = json.encode(response);
 
     if (kDebugMode) {
-      print("\n /////////////////////////////////////////////// getUserApi Printing ////////////////////////// \n ");
+      print("\n /////////////////////////////////////////////// postUserApi Printing ////////////////////////// \n ");
       //print("Returned statusCode: ${response.statusCode} \n");
       print(response['token']);
       print(response);
-      print("\n /////////////////////////////////////////////// getUserApi Printed ////////////////////////// \n ");
+      print("\n /////////////////////////////////////////////// postUserApi Printed ////////////////////////// \n ");
     }
 
     // saveUserData(data, response, context);
@@ -69,15 +69,15 @@ class UserRepository {
     // String? securityCode = UserDataProvider().userData?.securityCode;
 
     String jsonData = json.encode(data);
-    dynamic response = await _apiServices.patchApi("${AppUrl.usersUrl}$token/", jsonData);
+    dynamic response = await _apiServices.patchApi(jsonData, "${AppUrl.usersUrl}$token/");
 
-    if (kDebugMode) {
-      print("\n /////////////////////////////////////////////// getUserApi Printing ////////////////////////// \n ");
-      //print("Returned statusCode: ${response.statusCode} \n");
-      print(response['token']);
-      print(response);
-      print("\n /////////////////////////////////////////////// getUserApi Printed ////////////////////////// \n ");
-    }
+    // if (kDebugMode) {
+    //   print("\n /////////////////////////////////////////////// patchUserApi Printing ////////////////////////// \n ");
+    //   //print("Returned statusCode: ${response.statusCode} \n");
+    //   print(response['token']);
+    //   print(response);
+    //   print("\n /////////////////////////////////////////////// patchUserApi Printed ////////////////////////// \n ");
+    // }
 
     // saveUserData(data, response, context);
     return response;

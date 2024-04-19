@@ -11,6 +11,10 @@ void newPage(Widget page, BuildContext context) {
   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => page), (route) => false);
 }
 
+void replacePage(Widget page, BuildContext context) {
+  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => page));
+}
+
 snackBar(String message, context) {
   //final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   var snackDemo = SnackBar(

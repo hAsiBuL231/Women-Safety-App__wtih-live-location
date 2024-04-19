@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../.resources/colours/app_colours.dart';
-import '../../../view_models/home_page_model/location_model/listen_location.dart';
+import '../../../view_models/map_view_models/location_model/listen_location.dart';
 
 final homePageVM = Get.put(HomePageModel());
 final listenLocationVM = Get.put(ListenLocationProvider());

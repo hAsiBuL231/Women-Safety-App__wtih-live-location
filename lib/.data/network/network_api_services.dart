@@ -113,7 +113,7 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
-  Future patchApi(String url, dynamic data) async {
+  Future patchApi(dynamic data, String url) async {
     dynamic jsonResponse;
     try {
       //final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(Duration(seconds: 10));
@@ -176,16 +176,17 @@ class NetworkApiServices extends BaseApiServices {
       case 200:
         // print("response.statusCode,,,, case == 200");
         dynamic responseJson = jsonDecode(response.body);
-        showToast("Get Api call successful");
+        // showToast("Get Api call successful");
         return responseJson;
       case 201:
         // print("response.statusCode,,,, case == 200");
         dynamic responseJson = jsonDecode(response.body);
-        showToast("Post Api call successful");
+        // showToast("Post Api call successful");
         return responseJson;
       case 400:
         dynamic responseJson = jsonDecode(response.body);
-        throw FetchDataExceptions("${responseJson['error']['message']}");
+        showToast("$responseJson");
+        throw FetchDataExceptions("${responseJson}");
       //   throw InvalidUrlExceptions('');
       default:
         throw FetchDataExceptions("Error occurred while communicating with server ${response.statusCode}");

@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 
 import '../../../components/Dragabble FAB.dart';
 import '../../../models/location_model.dart';
-import '../../../view_models/home_page_model/location_model/Location_model.dart';
-import '../../../view_models/map_view_models/MapViewModel.dart';
+import '../../../repository/location_repo/LocationRepo.dart';
+import '../../../view_models/map_view_models/location_model/Location_model.dart';
 
 class MapPage extends StatefulWidget {
   final String securityCode;
@@ -54,7 +54,7 @@ class _MapPageState extends State<MapPage> {
   //   await controller.animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
   // }
 
-  MapViewModel mapVM = MapViewModel();
+  LocationRepo locationRepo = LocationRepo();
   Completer<GoogleMapController> mapController = Completer<GoogleMapController>();
 
   @override
@@ -63,7 +63,7 @@ class _MapPageState extends State<MapPage> {
       //appBar: AppBar(backgroundColor: const Color(0xFF0F9D58), title: const Text("GFG")),
       body: SafeArea(
           child: FutureBuilder(
-              future: mapVM.getUserLocationApi(context),
+              future: locationRepo.getUserLocationApi(widget.securityCode, context),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -75,6 +75,20 @@ class _MapPageState extends State<MapPage> {
 
                 final element = snapshot.data;
                 if (element != null) {
+                  return Obx(() => GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(location.latitude, location.longitude),
+                          zoom: 14,
+                        ),
+                        markers: Set<Marker>.of(locationVM.markers),
+                        mapType: MapType.normal,
+                        myLocationEnabled: true,
+                        compassEnabled: true,
+                        // on below line specifying controller on map complete.
+                        onMapCreated: (GoogleMapController controller) {
+                          mapController.complete(controller);
+                        },
+                      ));
                   return GetBuilder<LocationViewModel>(builder: (controller) {
                     return GoogleMap(
                       initialCameraPosition: CameraPosition(

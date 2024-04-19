@@ -4,8 +4,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 import '../../../../components/buttons/SecondaryButton.dart';
-import '../../../../view_models/home_page_model/location_model/Location_model.dart';
 import '../../../../view_models/home_page_model/sms_model/Sms_Model.dart';
+import '../../../../view_models/map_view_models/location_model/Location_model.dart';
 
 class SafeHome extends StatefulWidget {
   @override

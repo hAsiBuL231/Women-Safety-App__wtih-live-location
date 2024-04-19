@@ -27,7 +27,7 @@ class LocationViewModel extends GetxController {
 
   LocationPermission permission = LocationPermission.always;
 
-  List<Marker> markers = <Marker>[];
+  RxList<Marker> markers = <Marker>[].obs;
 
   LatLng currentP = const LatLng(0, 0);
   final LatLng _pGooglePlex = const LatLng(37.4223, -122.0848);

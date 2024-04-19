@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
 import '../../.utils/utils.dart';
 import '../../repository/login_repository/LoginRepository.dart';
@@ -37,13 +38,21 @@ class SignUpViewModel extends GetxController {
 
     try {
       LoginRepository repo = LoginRepository();
-      var response = repo.registerApi(data, context);
-      snackBar('Login successful', context);
+      var response = await repo.registerApi(data, context);
 
-      UserViewModel().postUserApi(context);
+      Prefs prefs = Prefs();
+      var userName = await prefs.get(prefs.username) ?? '';
+      var token = await prefs.get(prefs.token) ?? '';
 
-      Get.delete<SignUpViewModel>();
-      nextPage(const BottomPage(), context);
+      if (token != '') {
+        snackBar('Login successful', context);
+        UserViewModel repo2 = UserViewModel();
+
+        var response2 = await repo2.postUserApi(context);
+
+        Get.delete<SignUpViewModel>();
+        nextPage(const BottomPage(), context);
+      }
     } catch (e) {
       showToast(e.toString(), error: true);
     }
