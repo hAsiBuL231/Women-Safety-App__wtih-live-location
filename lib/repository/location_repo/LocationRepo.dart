@@ -29,15 +29,15 @@ class LocationRepo {
     }
   }
 
-  Future<dynamic> postUserLocationApi(var data, BuildContext context) async {
+  Future<dynamic> postUserLocationApi(BuildContext context) async {
     Prefs prefs = Prefs();
     String token = await prefs.get(prefs.token);
-    String email = await prefs.get(prefs.email);
+    String username = await prefs.get(prefs.username);
 
-    Map data = {"token": token, "taker": email, "message": "Please enter your name", "latitude": 0, "longitude": 0};
+    Map data = {"token": token, "taker": username, "message": "Please enter your name", "latitude": 0, "longitude": 0};
     try {
       String jsonData = json.encode(data);
-      dynamic response = await _apiServices.postApi(jsonData, "${AppUrl.locationUrl}/$token");
+      dynamic response = await _apiServices.postApi(jsonData, AppUrl.locationUrl);
       String jsonResponse = json.encode(response);
       snackBar('User Location Created', context);
       return jsonResponse;

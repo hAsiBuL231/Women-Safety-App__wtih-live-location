@@ -10,6 +10,7 @@ import '../../repository/login_repository/LoginRepository.dart';
 import 'package:http/http.dart' as http;
 
 import '../../view/bottom_screens/BottomPage.dart';
+import '../../view/splash_screen.dart';
 
 class LoginViewModel extends GetxController {
   final _api = LoginRepository();
@@ -53,8 +54,8 @@ class LoginViewModel extends GetxController {
       snackBar('Login successful', context);
 
       Get.delete<LoginViewModel>();
-      nextPage(const BottomPage(), context);
-      // showToast(response, error: false);
+      nextPage(const SplashScreen(), context);
+      // nextPage(const BottomPage(), context);
     } catch (e) {
       showToast("sf: ${e.toString()}", error: true);
     }

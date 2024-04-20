@@ -39,18 +39,18 @@ class _ContactsPageState extends State<ContactsPage> {
     if (searchController.text.isNotEmpty) {
       _contacts.retainWhere((element) {
         String searchTerm = searchController.text.toLowerCase();
-        String searchTermFlattren = flattenPhoneNumber(searchTerm);
+        String searchTermFlatten = flattenPhoneNumber(searchTerm);
         String contactName = element.displayName!.toLowerCase();
         bool nameMatch = contactName.contains(searchTerm);
         if (nameMatch == true) {
           return true;
         }
-        if (searchTermFlattren.isEmpty) {
+        if (searchTermFlatten.isEmpty) {
           return false;
         }
         var phone = element.phones!.firstWhere((p) {
-          String phnFLattered = flattenPhoneNumber(p.value!);
-          return phnFLattered.contains(searchTermFlattren);
+          String phnFlattered = flattenPhoneNumber(p.value!);
+          return phnFlattered.contains(searchTermFlatten);
         });
         return phone.value != null;
       });
@@ -68,15 +68,7 @@ class _ContactsPageState extends State<ContactsPage> {
         filterContact();
       });
     } else {
-      handInvaliedPermissions(permissionStatus);
-    }
-  }
-
-  handInvaliedPermissions(PermissionStatus permissionStatus) {
-    if (permissionStatus == PermissionStatus.denied) {
-      dialogueBox("Access to the contacts denied by the user", context);
-    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
-      dialogueBox("May contact does exist in this device", context);
+      handInvalidPermissions(permissionStatus);
     }
   }
 
@@ -89,6 +81,16 @@ class _ContactsPageState extends State<ContactsPage> {
       return permission;
     }
   }
+
+  handInvalidPermissions(PermissionStatus permissionStatus) {
+    if (permissionStatus == PermissionStatus.denied) {
+      dialogueBox("Access to the contacts denied by the user", context);
+    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
+      dialogueBox("May contact does exist in this device", context);
+    }
+  }
+
+
 
   getAllContacts() async {
     List<Contact> _contacts = await ContactsService.getContacts(withThumbnails: false);
@@ -105,51 +107,43 @@ class _ContactsPageState extends State<ContactsPage> {
       body: contacts.length == 0
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      autofocus: true,
-                      controller: searchController,
-                      decoration: const InputDecoration(labelText: "search sontact", prefixIcon: Icon(Icons.search)),
-                    ),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    autofocus: true,
+                    controller: searchController,
+                    decoration: const InputDecoration(labelText: "search contact", prefixIcon: Icon(Icons.search)),
                   ),
-                  listItemExit == true
-                      ? Expanded(
-                          child: ListView.builder(
-                            itemCount: isSearchIng == true ? contactsFiltered.length : contacts.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              Contact contact = isSearchIng == true ? contactsFiltered[index] : contacts[index];
-                              return ListTile(
-                                title: Text(contact.displayName!),
-                                // subtitle:Text(contact.phones!.elementAt(0)
-                                // .value!) ,
-                                leading: contact.avatar != null && contact.avatar!.length > 0
-                                    ? CircleAvatar(
-                                        backgroundColor: AppColours.primaryColor,
-                                        backgroundImage: MemoryImage(contact.avatar!),
-                                      )
-                                    : CircleAvatar(
-                                        backgroundColor: AppColours.primaryColor,
-                                        child: Text(contact.initials()),
-                                      ),
-                                onTap: () {
-                                  if (contact.phones!.length > 0) {
-                                    final String phoneNum = contact.phones!.elementAt(0).value!;
-                                    final String name = contact.displayName!;
-                                    _addContact(TContact(phoneNum, name));
-                                  } else {
-                                    Fluttertoast.showToast(msg: "Oops! phone number of this contact does exist");
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                        )
-                      : const Text("searching"),
-                ],
-              ),
+                ),
+                listItemExit == true
+                    ? Expanded(
+                        child: ListView.builder(
+                          itemCount: isSearchIng == true ? contactsFiltered.length : contacts.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            Contact contact = isSearchIng == true ? contactsFiltered[index] : contacts[index];
+                            return ListTile(
+                              title: Text(contact.displayName!),
+                              // subtitle:Text(contact.phones!.elementAt(0)
+                              // .value!) ,
+                              leading: contact.avatar != null && contact.avatar!.length > 0
+                                  ? CircleAvatar(backgroundColor: AppColours.primaryColor, backgroundImage: MemoryImage(contact.avatar!))
+                                  : CircleAvatar(backgroundColor: AppColours.primaryColor, child: Text(contact.initials())),
+                              onTap: () {
+                                if (contact.phones!.length > 0) {
+                                  final String phoneNum = contact.phones!.elementAt(0).value!;
+                                  final String name = contact.displayName!;
+                                  _addContact(TContact(phoneNum, name));
+                                } else {
+                                  Fluttertoast.showToast(msg: "Oops! phone number of this contact does exist");
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      )
+                    : const Text("searching"),
+              ]),
             ),
     );
   }

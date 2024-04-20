@@ -1,11 +1,13 @@
 //SignUpViewModel
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_women_safety_app/view/splash_screen.dart';
 import 'package:get/get.dart';
 
 import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
 import '../../.utils/utils.dart';
+import '../../repository/location_repo/LocationRepo.dart';
 import '../../repository/login_repository/LoginRepository.dart';
 import '../../view/bottom_screens/BottomPage.dart';
 import '../user_view_model/UserViewModel.dart';
@@ -50,8 +52,13 @@ class SignUpViewModel extends GetxController {
 
         var response2 = await repo2.postUserApi(context);
 
+        LocationRepo repo3 = LocationRepo();
+
+        var response3 = await repo3.postUserLocationApi(context);
+
         Get.delete<SignUpViewModel>();
-        nextPage(const BottomPage(), context);
+        nextPage(const SplashScreen(), context);
+        // nextPage(const BottomPage(), context);
       }
     } catch (e) {
       showToast(e.toString(), error: true);
