@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       homePageVM.loadData(context).then((value) {
         _startTimer();
       });
+      homePageVM.getLiveLocPer();
       //}
     } catch (e) {
       showToast("Failed to get preferences: $e", error: true);

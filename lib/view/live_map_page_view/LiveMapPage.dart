@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../.resources/colours/app_colours.dart';
 import '../../.utils/Functions.dart';
 import '../../components/drawer.dart';
+import '../../view_models/home_page_model/HomePageModel.dart';
 import '../../view_models/home_page_model/sms_model/Sms_Model.dart';
 import '../../view_models/map_view_models/location_model/Location_model.dart';
 import 'widgets/group_list_widget.dart';
@@ -33,6 +34,10 @@ class _LiveMapPageState extends State<LiveMapPage> {
   @override
   void initState() {
     super.initState();
+
+    final homePageVM = Get.put(HomePageModel());
+    homePageVM.loadData(context);
+    homePageVM.getLiveLocPer();
     //WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
 
     //final locationProvider = Provider.of<LocationProvider>(context, listen: false);
@@ -58,7 +63,6 @@ class _LiveMapPageState extends State<LiveMapPage> {
       shakeThresholdGravity: 2.7,
     );
   }
-
 
   Future<void> _refreshData() async {
     setState(() {});

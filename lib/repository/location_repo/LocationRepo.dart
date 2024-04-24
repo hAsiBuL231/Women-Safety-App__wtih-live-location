@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/.data/user_data_SharedPreferences/app_user_data.dart';
 
@@ -25,7 +25,7 @@ class LocationRepo {
       String jsonResponse = json.encode(response);
       return jsonResponse;
     } catch (e) {
-      showToast("Loc: ${e.toString()}", error: true);
+      showToast("Loc getUser: ${e.toString()}", error: true);
     }
   }
 
@@ -34,7 +34,9 @@ class LocationRepo {
     String token = await prefs.get(prefs.token);
     String username = await prefs.get(prefs.username);
 
-    Map data = {"token": token, "taker": username, "message": "Please enter your name", "latitude": 0, "longitude": 0};
+    Position? position = await Geolocator.getLastKnownPosition();
+
+    Map data = {"token": token, "taker": username, "message": "Please enter your name", "latitude": position!.latitude, "longitude": position.longitude};
     try {
       String jsonData = json.encode(data);
       dynamic response = await _apiServices.postApi(jsonData, AppUrl.locationUrl);
@@ -42,25 +44,25 @@ class LocationRepo {
       snackBar('User Location Created', context);
       return jsonResponse;
     } catch (e) {
-      showToast("Loc: ${e.toString()}", error: true);
+      showToast("Loc postUser: ${e.toString()}", error: true);
     }
     // Users user = await prefs.get("user");
     // String? securityCode = UserDataProvider().userData?.securityCode;
   }
 
-  Future<dynamic> patchUserLocationApi() async {
+  Future<dynamic> patchUserLocationApi(data) async {
     Prefs prefs = Prefs();
     String token = await prefs.get(prefs.token);
     // Users user = await prefs.get("user");
     // String? securityCode = UserDataProvider().userData?.securityCode;
-    Map data = {"latitude": 0, "longitude": 0};
+    // Map data = {"latitude": 0, "longitude": 0};
 
     try {
       String jsonData = json.encode(data);
       dynamic response = await _apiServices.patchApi(jsonData, "${AppUrl.locationUrl}$token/");
       return response;
     } catch (e) {
-      showToast("Loc: ${e.toString()}", error: true);
+      showToast("Loc patchUser: ${e.toString()}", error: true);
     }
   }
 }

@@ -22,6 +22,7 @@ Widget radioButton(context) {
           homePageVM.switchListTileValue.value = newValue;
           //setState(() => switchListTileValue = newValue);
           if (newValue == true) {
+            listenLocationVM.startListening();
             listenLocationVM.listenLocation(context);
           } else {
             listenLocationVM.stopListening();

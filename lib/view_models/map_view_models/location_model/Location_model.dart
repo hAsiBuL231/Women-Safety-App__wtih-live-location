@@ -74,8 +74,9 @@ class LocationViewModel extends GetxController {
   getCurrentLocation(context) async {
     final hasPermission = await handleLocationPermission(context);
     if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true).then((Position position) {
-      //setState(() {
+    //await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true).then((Position position) {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((Position position) {
+//setState(() {
       currentPosition = position;
       print(" \n \n currentPosition; $currentPosition \n \n ");
       currentP = LatLng(position.latitude, position.longitude);

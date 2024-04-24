@@ -43,17 +43,29 @@ Widget securityCodeView = Padding(
                         },
                       )*/
                       child: SelectionArea(
-                        child: Selector<UserDataProvider, Users?>(
-                            selector: (_, provider) => provider.userData,
-                            builder: (_, userData, __) {
-                              if (userData != null) {
-                                return AutoSizeText("${userData.securityCode}",
-                                    maxLines: 2,
-                                    softWrap: true,
-                                    style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold, fontFamily: GoogleFonts.manrope.toString()));
-                              }
-                              return const Text("");
-                            }),
+                        child: FutureBuilder(
+                          future: Prefs().get('token'),
+                          builder: (context, snapshot) => AutoSizeText("${snapshot.data}",
+                              maxLines: 2,
+                              softWrap: true,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: GoogleFonts.manrope.toString(),
+                              )),
+                        ),
+                        // child: Selector<UserDataProvider, Users?>(
+                        //     selector: (_, provider) => provider.userData,
+                        //     builder: (_, userData, __) {
+                        //       if (userData != null) {
+                        //         return AutoSizeText("${userData.securityCode}",
+                        //             maxLines: 2,
+                        //             softWrap: true,
+                        //             style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold, fontFamily: GoogleFonts.manrope.toString()));
+                        //       }
+                        //       return const Text("");
+                        //     }),
                       )),
                 )),
           ]),

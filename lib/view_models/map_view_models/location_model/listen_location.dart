@@ -1,14 +1,55 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../repository/location_repo/LocationRepo.dart';
 
 class ListenLocationProvider extends GetxController {
   //final Location location = Location();
   //StreamSubscription<LocationData>? _locationSubscription;
 
+  RxBool listen = false.obs;
+
+  final Rx<AndroidSettings> locationSettings = AndroidSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+      // forceLocationManager: true,
+      intervalDuration: const Duration(seconds: 2),
+      //(Optional) Set foreground notification config to keep the app alive when going to the background
+      foregroundNotificationConfig: const ForegroundNotificationConfig(
+        notificationText: "TrackLive app will continue to receive your location even when you aren't using it",
+        notificationTitle: "Running in Background",
+        enableWakeLock: true,
+      )).obs;
+
   // created method for getting user current location
   Future<void> listenLocation(BuildContext context) async {
+    if (listen.isTrue) {
+      Geolocator.getServiceStatusStream().listen((ServiceStatus status) async {
+        if (status == ServiceStatus.disabled) {
+          await Geolocator.requestPermission();
+          // await Geolocator.openAppSettings();
+          // await Geolocator.openLocationSettings();
+        }
+        print(" \n  serviceStatusStream: $status \n  ");
+      });
+
+      Geolocator.getPositionStream(locationSettings: locationSettings.value).listen((Position? position) {
+        print(position == null ? 'Unknown' : '${position.latitude.toString()}, ${position.longitude.toString()}');
+        LocationRepo locationApi = LocationRepo();
+
+        if (position != null) {
+          Map data = {"latitude": position.latitude, "longitude": position.longitude};
+
+          /// Implement save data in the server
+          locationApi.patchUserLocationApi(data);
+        }
+      });
+    }
+
     // _locationSubscription = location.onLocationChanged.handleError((onError) {
     //   print(" \n \n \n _listenLocation Error: \n $onError \n \n \n ");
     //   //print(onError);
@@ -43,7 +84,21 @@ class ListenLocationProvider extends GetxController {
     //});
   }
 
-  stopListening() {
+  // getListing() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   listen.value = prefs.getBool('locPer')!;
+  // }
+
+  startListening() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('locPer', true);
+    listen.value = true;
+  }
+
+  stopListening() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('locPer', false);
+    listen.value = false;
     //_locationSubscription?.cancel();
     //setState(() => _locationSubscription = null);
     //_locationSubscription = null;

@@ -10,10 +10,20 @@ import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.resources/app_url/AppUrl.dart';
 import '../../.utils/utils.dart';
 import '../../models/user_model.dart';
+import '../map_view_models/location_model/listen_location.dart';
 
 class HomePageModel extends GetxController {
   RxBool switchListTileValue = false.obs;
   Prefs prefs = Prefs();
+
+  getLiveLocPer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    switchListTileValue.value = prefs.getBool('locPer')!;
+    if (switchListTileValue.isTrue) {
+      ListenLocationProvider prov = Get.put(ListenLocationProvider());
+      prov.startListening();
+    }
+  }
 
   requestPermission() async {
     var status = await Permission.location.request();

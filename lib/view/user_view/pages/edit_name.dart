@@ -22,7 +22,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
 
   getUser() async {
     user = await UserData.getUser();
-    // firstNameController.text = user.name;
+    firstNameController.text = user.name;
   }
 
   @override
