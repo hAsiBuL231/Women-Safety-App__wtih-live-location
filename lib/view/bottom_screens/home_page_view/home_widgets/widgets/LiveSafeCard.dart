@@ -16,26 +16,26 @@ class LiveSafeCard extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              onMapFunction('$queryText');
+              onMapFunction(queryText);
             },
             child: Card(
               elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: 50,
                 child: Center(
                   child: Image.asset(
-                    '$iconPath',
+                    iconPath,
                     height: 32,
                   ),
                 ),
               ),
             ),
           ),
-          Text('$title')
+          Text(title)
         ],
       ),
     );

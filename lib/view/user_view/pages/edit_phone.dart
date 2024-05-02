@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_women_safety_app/.utils/Functions.dart';
-import 'package:flutter_women_safety_app/view/user_view/UserView.dart';
 import '../../../view_models/user_view_model/UserViewModel.dart';
 import '../user/user_data.dart';
 
@@ -40,7 +38,7 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
   }
 
   void updateUserValue(String phone) {
-    String formattedPhoneNumber = "(" + phone.substring(0, 3) + ") " + phone.substring(3, 6) + "-" + phone.substring(6, phone.length);
+    String formattedPhoneNumber = "(${phone.substring(0, 3)}) ${phone.substring(3, 6)}-${phone.substring(6, phone.length)}";
     // user.phone = formattedPhoneNumber as int;
     user.phone = int.parse(phone);
     UserViewModel().patchUserPhoneApi(user.phone);

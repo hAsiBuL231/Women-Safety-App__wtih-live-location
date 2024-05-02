@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_women_safety_app/view_models/user_view_model/UserViewMod
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/buttons/SecondaryButton.dart';
 import '../../models/user_model.dart';
-import 'user/user_data.dart';
 import 'widgets/display_image_widget.dart';
 
 import 'pages/edit_email.dart';

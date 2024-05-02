@@ -4,10 +4,13 @@ class AppUrl {
   // static const String baseUrl = "http://10.0.2.2:8000";
 
 
-  //static const String baseUrl = "http://192.168.0.111:8000"; /// Mess Wifi
-  static const String baseUrl = "http://192.168.0.108:8000"; /// basha
+   static const String baseUrl = "http://192.168.0.110:8000"; /// Mess Wifi
+  // static const String baseUrl = "http://192.168.0.108:8000"; /// basha
   ///  192.168.42.172
-  //static const String baseUrl = "http://192.168.42.172:8000"; /// mobile
+  // static const String baseUrl = "http://192.168.42.172:8000"; /// mobile
+
+  // Dep wifi CoU - 10.18.172.135
+  // static const String baseUrl = "http://10.18.172.135:8000"; /// Dep wifi CoU
 
   //  --web-browser-flag "--disable-web-security"
   // python manage.py runserver 0.0.0.0:8000

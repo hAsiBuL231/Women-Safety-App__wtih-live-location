@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -18,7 +17,7 @@ class _SafeWebViewState extends State<SafeWebView> {
   void initState() {
     super.initState();
 
-    final WebViewController controller = WebViewController.fromPlatformCreationParams(PlatformWebViewControllerCreationParams());
+    final WebViewController controller = WebViewController.fromPlatformCreationParams(const PlatformWebViewControllerCreationParams());
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)

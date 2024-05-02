@@ -5,8 +5,6 @@ import 'package:flutter_women_safety_app/.data/user_data_SharedPreferences/app_u
 
 import '../../.data/network/network_api_services.dart';
 import '../../.resources/app_url/AppUrl.dart';
-import '../../.utils/Functions.dart';
-import '../../models/user_model.dart';
 
 class UserRepository {
   final _apiServices = NetworkApiServices();

@@ -30,7 +30,7 @@ class UserLocation {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['token'] = url;
     data['taker'] = taker;
     data['message'] = message;

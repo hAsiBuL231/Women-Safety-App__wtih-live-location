@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_women_safety_app/view_models/user_view_model/UserViewModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/user_model.dart';
@@ -14,8 +13,8 @@ class UserData {
       name: 'Test Test',
       email: 'test.test@gmail.com',
       phone: 44,
-      longitude: 85,
-      latitude: 48,
+      // longitude: 85,
+      // latitude: 48,
       securityCode: 'sfsddf4');
 
   static Future init() async => _preferences = await SharedPreferences.getInstance();

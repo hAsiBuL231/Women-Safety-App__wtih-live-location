@@ -11,7 +11,7 @@ import '../../.utils/Functions.dart';
 import '../../components/drawer.dart';
 import '../../view_models/home_page_model/HomePageModel.dart';
 import '../../view_models/home_page_model/sms_model/Sms_Model.dart';
-import '../../view_models/map_view_models/location_model/Location_model.dart';
+import '../../view_models/map_view_models/MapViewModel.dart';
 import 'widgets/group_list_widget.dart';
 import 'widgets/radio_button_widget.dart';
 import 'widgets/security_code_widget.dart';
@@ -29,7 +29,7 @@ class _LiveMapPageState extends State<LiveMapPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final smsVm = Get.put(SmsModel());
-  final locationVM = Get.put(LocationViewModel());
+  final locationVM = Get.put(MapViewModel());
 
   @override
   void initState() {

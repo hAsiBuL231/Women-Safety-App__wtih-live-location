@@ -2,7 +2,6 @@ import 'package:flutter_women_safety_app/repository/user_repository/UserReposito
 import 'package:get/get.dart';
 import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
-import 'package:http/http.dart' as http;
 
 class UserViewModel extends GetxController {
   final _api = UserRepository();

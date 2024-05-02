@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/.data/network/network_api_services.dart';
@@ -10,8 +9,6 @@ import 'package:provider/provider.dart';
 import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.resources/app_url/AppUrl.dart';
 import '../../.utils/Functions.dart';
-import '../../models/user_model.dart';
-import '../../view/bottom_screens/BottomPage.dart';
 
 class CreateGroupFormViewModel extends GetxController {
   Rx<TextEditingController> groupNameController = TextEditingController().obs;

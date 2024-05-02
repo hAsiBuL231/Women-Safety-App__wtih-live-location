@@ -58,11 +58,11 @@ class _MyWidgetState extends State<MyWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Webview Demo"),
+        title: const Text("Webview Demo"),
       ),
       body: _currentWebsiteIndex < websiteUrls.length
           ? _buildWebView(websiteUrls[_currentWebsiteIndex])
-          : Center(
+          : const Center(
               child: Text("All websites loaded."),
             ),
     );

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/view/user_view/UserView.dart';
 
-import '../user_view/user_data_view.dart';
 import '../live_map_page_view/LiveMapPage.dart';
-import '../web/NewWebView.dart';
 import 'contacts_view/add_contacts.dart';
 import 'home_page_view/HomePageView.dart';
 import 'review_page_view/review_page.dart';
@@ -18,11 +16,11 @@ class BottomPage extends StatefulWidget {
 class _BottomPageState extends State<BottomPage> {
   int currentIndex = 0;
   List<Widget> pages = [
-    HomePageView(),
-    LiveMapPage(),
-    AddContactsPage(),
+    const HomePageView(),
+    const LiveMapPage(),
+    const AddContactsPage(),
     // UsersList(),
-    UserView(),
+    const UserView(),
     const ReviewPage(),
   ];
   onTapped(int index) {

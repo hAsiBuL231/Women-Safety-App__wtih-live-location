@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../repository/location_repo/LocationRepo.dart';
+import '../../repository/location_repo/LocationRepo.dart';
 
 class ListenLocationProvider extends GetxController {
   //final Location location = Location();

@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../user/user_data.dart';
 
 class EditImagePage extends StatefulWidget {
-  const EditImagePage({Key? key}) : super(key: key);
+  const EditImagePage({super.key});
 
   @override
   _EditImagePageState createState() => _EditImagePageState();

@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../../.resources/colours/app_colours.dart';
-import '../../../models/user_model.dart';
 
 /// ///////////////////////////    Your security code   ///////////////////////////
 

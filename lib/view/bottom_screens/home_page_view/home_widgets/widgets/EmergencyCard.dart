@@ -7,7 +7,7 @@ class EmergencyCard extends StatelessWidget {
   final String title;
   final String subTitle;
 
-  EmergencyCard({required this.number, required this.imagePath, required this.title, required this.subTitle});
+  const EmergencyCard({super.key, required this.number, required this.imagePath, required this.title, required this.subTitle});
 
   _callNumber(String number) async {
     await FlutterPhoneDirectCaller.callNumber(number);
@@ -21,7 +21,7 @@ class EmergencyCard extends StatelessWidget {
           elevation: 5,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: InkWell(
-            onTap: () => _callNumber("$number"),
+            onTap: () => _callNumber(number),
             child: Container(
                 height: 180,
                 width: MediaQuery.of(context).size.width * 0.7,
@@ -37,19 +37,19 @@ class EmergencyCard extends StatelessWidget {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundImage: Image.asset("$imagePath", fit: BoxFit.fill).image,
+                      backgroundImage: Image.asset(imagePath, fit: BoxFit.fill).image,
                       backgroundColor: Colors.white.withOpacity(0.5),
                       //child: Image.asset("$imagePath", fit: BoxFit.fill),
                     ),
                     Expanded(
                       child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text('$title',
+                        Text(title,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: MediaQuery.of(context).size.width * 0.06,
                             )),
-                        Text('$subTitle',
+                        Text(subTitle,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: MediaQuery.of(context).size.width * 0.035,
@@ -59,7 +59,7 @@ class EmergencyCard extends StatelessWidget {
                             width: 80,
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
                             child: Center(
-                              child: Text('$number',
+                              child: Text(number,
                                   style: TextStyle(
                                     color: Colors.red[300],
                                     fontWeight: FontWeight.bold,

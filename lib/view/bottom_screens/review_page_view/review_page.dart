@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../components/buttons/PrimaryButton.dart';
 import '../../../components/text_fields/custom_textfield.dart';

@@ -112,7 +112,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                           onPressed: () {
                             // Validate returns true if the form is valid, or false otherwise.
                             if (_formKey.currentState!.validate() /*&& isAlpha(firstNameController.text + secondNameController.text)*/) {
-                              _updateUserValue(firstNameController.text + " " + secondNameController.text);
+                              _updateUserValue("${firstNameController.text} ${secondNameController.text}");
                               Navigator.pop(context);
                               widget.refreshCallback();
                             }

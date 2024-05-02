@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../.utils/Functions.dart';
-import '../view/Authentication/login_view/LoginPageView.dart';
 import '../view/bottom_screens/BottomPage.dart';
 import '../view/user_view/user_data_view.dart';
 

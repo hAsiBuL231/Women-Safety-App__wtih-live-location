@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../components/Dragabble FAB.dart';
 import '../../../models/location_model.dart';
 import '../../../repository/location_repo/LocationRepo.dart';
-import '../../../view_models/map_view_models/location_model/Location_model.dart';
+import '../../../view_models/map_view_models/MapViewModel.dart';
 
 class MapPage extends StatefulWidget {
   final String securityCode;
@@ -22,7 +21,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   // static const LatLng _pApplePark = LatLng(23.45, 91.17);
   // CameraPosition kGoogle = const CameraPosition(target: LatLng(22.366577, 91.831600), zoom: 14.4746);
-  LocationViewModel locationVM = Get.put(LocationViewModel());
+  MapViewModel locationVM = Get.put(MapViewModel());
 
   @override
   void initState() {
@@ -75,6 +74,13 @@ class _MapPageState extends State<MapPage> {
 
                 final element = snapshot.data;
                 if (element != null) {
+                  // marker added for target users location
+                  locationVM.markers.add(Marker(
+                    markerId: const MarkerId("1"),
+                    position: LatLng(location.latitude, location.longitude),
+                    infoWindow: const InfoWindow(title: 'Target user Location'),
+                  ));
+
                   return Obx(() => GoogleMap(
                         initialCameraPosition: CameraPosition(
                           target: LatLng(location.latitude, location.longitude),
@@ -89,7 +95,7 @@ class _MapPageState extends State<MapPage> {
                           mapController.complete(controller);
                         },
                       ));
-                  return GetBuilder<LocationViewModel>(builder: (controller) {
+                  return GetBuilder<MapViewModel>(builder: (controller) {
                     return GoogleMap(
                       initialCameraPosition: CameraPosition(
                         target: LatLng(location.latitude, location.longitude),

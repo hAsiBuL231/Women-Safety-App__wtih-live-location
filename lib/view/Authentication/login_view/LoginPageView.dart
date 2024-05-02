@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../../../.utils/Functions.dart';
 import '../../../.utils/utils.dart';
-import '../../../view_models/signup_view_model/SignUpViewModel.dart';
 import '../../../view_models/login_view_model/LoginViewModel.dart';
 import '../forget_password_view/ForgetPasswordPage.dart';
 import '../signup_view/SignUpPageView.dart';

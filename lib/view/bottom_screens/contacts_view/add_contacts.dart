@@ -60,15 +60,17 @@ class _AddContactsPageState extends State<AddContactsPage> {
             const SizedBox(height: 16),
             PrimaryButton(
                 title: "Add Trusted Contacts",
+                textColor: Colors.white,
                 onPressed: () async {
                   bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactsPage()));
                   if (result == true) {
                     showList();
                   }
                 }),
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
-                // shrinkWrap: true,
+                shrinkWrap: true,
                 itemCount: count,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(

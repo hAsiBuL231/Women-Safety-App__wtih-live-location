@@ -10,7 +10,7 @@ import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.resources/app_url/AppUrl.dart';
 import '../../.utils/utils.dart';
 import '../../models/user_model.dart';
-import '../map_view_models/location_model/listen_location.dart';
+import '../map_view_models/listen_location.dart';
 
 class HomePageModel extends GetxController {
   RxBool switchListTileValue = false.obs;
@@ -63,9 +63,9 @@ class HomePageModel extends GetxController {
 
       //Provider.of<UserDataProvider>(context, listen: false).saveUserData(user);
 
-      SharedPreferences _preferences = await SharedPreferences.getInstance();
+      SharedPreferences preferences = await SharedPreferences.getInstance();
       final json = jsonEncode(user.toJson());
-      await _preferences.setString('user', json);
+      await preferences.setString('user', json);
 
       provider.saveUserData(user);
     });

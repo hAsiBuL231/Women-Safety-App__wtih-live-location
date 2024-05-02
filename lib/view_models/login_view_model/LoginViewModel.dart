@@ -1,15 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_women_safety_app/.data/network/base_api_services.dart';
 import 'package:get/get.dart';
-import '../../.data/network/network_api_services.dart';
 import '../../.utils/Functions.dart';
 import '../../repository/login_repository/LoginRepository.dart';
-import 'package:http/http.dart' as http;
 
-import '../../view/bottom_screens/BottomPage.dart';
 import '../../view/splash_screen.dart';
 
 class LoginViewModel extends GetxController {

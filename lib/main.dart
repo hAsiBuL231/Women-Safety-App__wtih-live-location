@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '.data/user_data_SharedPreferences/app_user_data.dart';
@@ -34,10 +33,7 @@ class MyApp extends StatelessWidget {
                       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0.0))))),
               inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder(borderRadius: BorderRadius.circular(0.0))),
               textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  alignment: Alignment.centerLeft,
-                ),
+                style: TextButton.styleFrom(foregroundColor: Colors.black, alignment: Alignment.centerLeft),
               )),
           // ThemeData(
           //   //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

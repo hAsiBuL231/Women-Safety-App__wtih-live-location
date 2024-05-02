@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ class CustomAppBar extends StatelessWidget {
   // const CustomAppBar({super.key});
   Function? onTap;
   int? quoteIndex;
-  CustomAppBar({this.onTap, this.quoteIndex});
+  CustomAppBar({super.key, this.onTap, this.quoteIndex});
 
   List sweetSayings = [
     "Your presence, lights up the whole room",

@@ -6,10 +6,8 @@ import 'package:get/get.dart';
 
 import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
-import '../../.utils/utils.dart';
 import '../../repository/location_repo/LocationRepo.dart';
 import '../../repository/login_repository/LoginRepository.dart';
-import '../../view/bottom_screens/BottomPage.dart';
 import '../user_view_model/UserViewModel.dart';
 
 class SignUpViewModel extends GetxController {

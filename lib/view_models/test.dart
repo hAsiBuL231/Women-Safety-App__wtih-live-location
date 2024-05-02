@@ -75,7 +75,7 @@ class _MapScreenState extends State<MapScreen> {
   void _addNoteMarker(LatLng latLng) {
     showDialog(
       context: context,
-      builder: (context) => NoteInputDialog(),
+      builder: (context) => const NoteInputDialog(),
     ).then((noteText) {
       if (noteText != null) {
         setState(() {
@@ -148,12 +148,14 @@ class _MapScreenState extends State<MapScreen> {
 }
 
 class NoteInputDialog extends StatefulWidget {
+  const NoteInputDialog({super.key});
+
   @override
   _NoteInputDialogState createState() => _NoteInputDialogState();
 }
 
 class _NoteInputDialogState extends State<NoteInputDialog> {
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

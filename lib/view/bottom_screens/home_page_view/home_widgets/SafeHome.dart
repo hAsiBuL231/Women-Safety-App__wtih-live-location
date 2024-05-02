@@ -5,16 +5,18 @@ import 'package:get/get.dart';
 
 import '../../../../components/buttons/SecondaryButton.dart';
 import '../../../../view_models/home_page_model/sms_model/Sms_Model.dart';
-import '../../../../view_models/map_view_models/location_model/Location_model.dart';
+import '../../../../view_models/map_view_models/MapViewModel.dart';
 
 class SafeHome extends StatefulWidget {
+  const SafeHome({super.key});
+
   @override
   State<SafeHome> createState() => _SafeHomeState();
 }
 
 class _SafeHomeState extends State<SafeHome> {
   final smsVm = Get.put(SmsModel());
-  final locationVM = Get.put(LocationViewModel());
+  final locationVM = Get.put(MapViewModel());
 
   Position? _curentPosition;
   String? _curentAddress;

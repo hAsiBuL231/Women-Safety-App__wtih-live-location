@@ -4,8 +4,8 @@ class Users {
   String name;
   int phone;
   String imageUrl;
-  double latitude;
-  double longitude;
+  // double latitude;
+  // double longitude;
 
   Users({
     required this.securityCode,
@@ -13,8 +13,8 @@ class Users {
     required this.name,
     required this.phone,
     required this.imageUrl,
-    required this.latitude,
-    required this.longitude,
+    // required this.latitude,
+    // required this.longitude,
   });
 
   factory Users.fromJson(Map<String, dynamic> json) {
@@ -24,8 +24,8 @@ class Users {
       name: json['name'],
       phone: json['phone'],
       imageUrl: json['imageUrl'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      // latitude: json['latitude'],
+      // longitude: json['longitude'],
     );
   }
 
@@ -36,8 +36,8 @@ class Users {
       'name': name,
       'phone': phone,
       'imageUrl': imageUrl,
-      'latitude': latitude,
-      'longitude': longitude,
+      // 'latitude': latitude,
+      // 'longitude': longitude,
     };
   }
 }

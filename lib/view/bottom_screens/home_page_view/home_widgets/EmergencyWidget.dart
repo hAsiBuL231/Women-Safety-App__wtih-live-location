@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'widgets/EmergencyCard.dart';
 
 class EmergencyWidget extends StatelessWidget {
-  const EmergencyWidget({Key? key}) : super(key: key);
+  const EmergencyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class EmergencyWidget extends StatelessWidget {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        children: [
+        children: const [
           EmergencyCard(
             number: "999",
             imagePath: "Assets/images/icons/alert.png",

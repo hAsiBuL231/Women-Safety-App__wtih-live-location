@@ -1,4 +1,3 @@
-import 'package:flutter_women_safety_app/models/user_model.dart';
 
 class Group {
   String groupId;

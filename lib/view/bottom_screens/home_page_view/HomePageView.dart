@@ -69,7 +69,7 @@ class _HomePageViewState extends State<HomePageView> {
                 const LiveSafe(),
 
                 /// SafeHome
-                SafeHome(),
+                const SafeHome(),
               ]),
             ),
           ]),

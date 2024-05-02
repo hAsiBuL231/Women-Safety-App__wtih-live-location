@@ -4,7 +4,9 @@ class PrimaryButton extends StatelessWidget {
   final String title;
   final Function onPressed;
   bool loading;
-  PrimaryButton({super.key, required this.title, required this.onPressed, this.loading = false});
+  Color? textColor;
+  Color? buttonColor;
+  PrimaryButton({super.key, required this.title, required this.onPressed, this.loading = false, this.textColor, this.buttonColor });
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +20,11 @@ class PrimaryButton extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
             // backgroundColor: Colors.pink,
-            backgroundColor: const Color(0xfffc3b77),
+            backgroundColor: buttonColor ?? const Color(0xfffc3b77),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
         child: Text(
           title,
-          style: const TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: textColor),
         ),
       ),
     );

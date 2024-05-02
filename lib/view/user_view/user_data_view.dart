@@ -80,7 +80,7 @@ class _UsersListState extends State<UsersList> {
                   child: ListTile(
                     title: Text('Name: ${user.name}'),
                     subtitle: Text('Email: ${user.email} \nPhone: ${user.phone.toString()}\n'
-                        'securityCode: ${user.securityCode} \nlatitude\\longitude: ${user.latitude}\\${user.longitude}'),
+                        'securityCode: ${user.securityCode} \n'),
                   ),
                 );
                 return Card(
