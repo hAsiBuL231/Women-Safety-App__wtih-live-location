@@ -26,18 +26,11 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
-    print(" \n \n \n _listenLocation Error: \n ${locationVM.currentP} \n \n \n ");
-
     locationVM.handleLocationPermission(context);
     locationVM.getCurrentLocation(context);
 
-    print(" \n \n \n _listenLocation: \n ${locationVM.currentP} \n \n \n ");
+    print(" \n \n \n _listenLocation: \n ${locationVM.currentLatLng} \n \n \n ");
 
-    locationVM.markers.add(Marker(
-        markerId: const MarkerId("Current Location"),
-        icon: BitmapDescriptor.defaultMarker,
-        position: locationVM.currentP,
-        infoWindow: const InfoWindow(title: 'My Position')));
     // locationVM.markers
     //     .add(Marker(markerId: const MarkerId("userLocation"), icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan), position: _pGooglePlex));
 
@@ -47,17 +40,18 @@ class _MapPageState extends State<MapPage> {
     //     });
   }
 
-  // Future<void> _cameraToPosition(LatLng pos) async {
-  //   final GoogleMapController controller = await _mapController.future;
-  //   CameraPosition newCameraPosition = CameraPosition(target: pos, zoom: 15);
-  //   await controller.animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
-  // }
+  /*Future<void> _cameraToPosition(LatLng pos) async {
+    final GoogleMapController controller = await _mapController.future;
+    CameraPosition newCameraPosition = CameraPosition(target: pos, zoom: 15);
+    await controller.animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
+  }*/
 
   LocationRepo locationRepo = LocationRepo();
   Completer<GoogleMapController> mapController = Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
+    UserLocation? userLocation;
     return Scaffold(
       //appBar: AppBar(backgroundColor: const Color(0xFF0F9D58), title: const Text("GFG")),
       body: SafeArea(
@@ -71,17 +65,21 @@ class _MapPageState extends State<MapPage> {
                 }
                 //showToast("${widget.securityCode}");
                 UserLocation location = UserLocation.fromJson(jsonDecode(snapshot.data));
+                userLocation = location;
 
                 final element = snapshot.data;
                 if (element != null) {
+                  locationVM.getPolylinePoints(location);
+
                   // marker added for target users location
                   locationVM.markers.add(Marker(
                     markerId: const MarkerId("1"),
                     position: LatLng(location.latitude, location.longitude),
-                    infoWindow: const InfoWindow(title: 'Target user Location'),
+                    infoWindow: const InfoWindow(title: 'Target user Location', snippet: '*'),
+                    // icon: BitmapDescriptor.fromAssetImage(configuration, assetName)
                   ));
 
-                  return Obx(() => GoogleMap(
+                  /*return Obx(() => GoogleMap(
                         initialCameraPosition: CameraPosition(
                           target: LatLng(location.latitude, location.longitude),
                           zoom: 14,
@@ -94,7 +92,8 @@ class _MapPageState extends State<MapPage> {
                         onMapCreated: (GoogleMapController controller) {
                           mapController.complete(controller);
                         },
-                      ));
+                        polylines: {Polyline(polylineId: const PolylineId("route"), points: locationVM.polylineCoordinates, color: const Color(0xFF7B61FF), width: 6)},
+                      ));*/
                   return GetBuilder<MapViewModel>(builder: (controller) {
                     return GoogleMap(
                       initialCameraPosition: CameraPosition(
@@ -109,6 +108,7 @@ class _MapPageState extends State<MapPage> {
                       onMapCreated: (GoogleMapController controller) {
                         mapController.complete(controller);
                       },
+                      polylines: {Polyline(polylineId: const PolylineId("route"), points: locationVM.polylineCoordinates, color: const Color(0xFF7B61FF), width: 6)},
                     );
                   });
                 } else {
@@ -117,7 +117,7 @@ class _MapPageState extends State<MapPage> {
               })),
       floatingActionButton: DraggableFab(
         icon: Icons.center_focus_strong,
-        onPressed: () async => await locationVM.returnToCurrLoc(mapController),
+        onPressed: () async => await locationVM.returnToTargetLoc(mapController, userLocation!),
       ),
     );
 

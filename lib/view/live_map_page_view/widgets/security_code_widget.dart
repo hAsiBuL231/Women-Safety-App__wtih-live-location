@@ -11,7 +11,7 @@ Widget securityCodeView = Padding(
     padding: const EdgeInsets.all(10),
     child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: AppColours.secondaryBackground,
+        color: AppColors.secondaryBackground,
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Padding(
@@ -29,7 +29,7 @@ Widget securityCodeView = Padding(
                 padding: const EdgeInsets.all(6),
                 child: Card(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: AppColours.alternate,
+                  color: AppColors.alternate,
                   elevation: 4,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   child: Padding(

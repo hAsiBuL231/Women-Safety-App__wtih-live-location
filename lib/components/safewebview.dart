@@ -21,7 +21,8 @@ class _SafeWebViewState extends State<SafeWebView> {
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
+      //..setBackgroundColor(const Color(0x00000000))
+      ..setBackgroundColor(Colors.white)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {

@@ -77,7 +77,7 @@ class _LiveMapPageState extends State<LiveMapPage> {
       child: Scaffold(
         drawer: const DrawerWidget(),
         key: scaffoldKey,
-        backgroundColor: AppColours.primaryBackground,
+        backgroundColor: AppColors.primaryBackground,
         body: Padding(
           padding: const EdgeInsets.all(6),
           child: RefreshIndicator(

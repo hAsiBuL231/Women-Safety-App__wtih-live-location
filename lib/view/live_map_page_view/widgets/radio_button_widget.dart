@@ -13,7 +13,7 @@ final listenLocationVM = Get.put(ListenLocationProvider());
 Widget radioButton(context) {
   return Obx(
     () => Card(
-      color: AppColours.tertiary,
+      color: AppColors.tertiary,
       elevation: 10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: SwitchListTile.adaptive(
@@ -29,12 +29,12 @@ Widget radioButton(context) {
           }
         },
         title: AutoSizeText('Enable Live Location',
-            maxLines: 1, style: TextStyle(color: AppColours.primaryBackground, fontSize: 24, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString())),
+            maxLines: 1, style: TextStyle(color: AppColors.primaryBackground, fontSize: 24, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString())),
         subtitle: AutoSizeText('Friends can see your live location...',
-            maxLines: 1, style: TextStyle(color: AppColours.primaryBackground, fontSize: 12, fontWeight: FontWeight.w500, fontFamily: GoogleFonts.manrope.toString())),
-        tileColor: AppColours.tertiary,
-        activeColor: AppColours.secondaryBackground,
-        activeTrackColor: AppColours.primary,
+            maxLines: 1, style: TextStyle(color: AppColors.primaryBackground, fontSize: 12, fontWeight: FontWeight.w500, fontFamily: GoogleFonts.manrope.toString())),
+        tileColor: AppColors.tertiary,
+        activeColor: AppColors.secondaryBackground,
+        activeTrackColor: AppColors.primary,
         dense: false,
         controlAffinity: ListTileControlAffinity.trailing,
         contentPadding: const EdgeInsetsDirectional.fromSTEB(20, 0, 16, 0),

@@ -28,10 +28,10 @@ Widget groupListWidget(BuildContext context) {
           child: FloatingActionButton.extended(
             onPressed: () => nextPage(const CreateGroupForm(), context),
             elevation: 10,
-            backgroundColor: AppColours.tertiary,
+            backgroundColor: AppColors.tertiary,
             label: AutoSizeText("Create New Group",
                 maxLines: 1,
-                style: TextStyle(color: AppColours.primaryBackground, fontSize: 18, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString())),
+                style: TextStyle(color: AppColors.primaryBackground, fontSize: 18, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString())),
           )),
 
       /// ///////////////////////////    Group List from firebase ///////////////////////////

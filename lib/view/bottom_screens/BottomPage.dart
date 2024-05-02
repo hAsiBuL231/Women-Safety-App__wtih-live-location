@@ -21,7 +21,7 @@ class _BottomPageState extends State<BottomPage> {
     const AddContactsPage(),
     // UsersList(),
     const UserView(),
-    const ReviewPage(),
+    // const ReviewPage(),
   ];
   onTapped(int index) {
     setState(() {
@@ -39,7 +39,7 @@ class _BottomPageState extends State<BottomPage> {
         BottomNavigationBarItem(label: 'Contacts', icon: Icon(Icons.contacts)),
         // BottomNavigationBarItem(label: 'Chats', icon: Icon(Icons.chat)),
         BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
-        BottomNavigationBarItem(label: 'Reviews', icon: Icon(Icons.reviews))
+        // BottomNavigationBarItem(label: 'Reviews', icon: Icon(Icons.reviews))
       ]),
     );
   }

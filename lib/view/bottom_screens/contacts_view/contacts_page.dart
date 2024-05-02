@@ -125,8 +125,8 @@ class _ContactsPageState extends State<ContactsPage> {
                               // subtitle:Text(contact.phones!.elementAt(0)
                               // .value!) ,
                               leading: contact.avatar != null && contact.avatar!.length > 0
-                                  ? CircleAvatar(backgroundColor: AppColours.primaryColor, backgroundImage: MemoryImage(contact.avatar!))
-                                  : CircleAvatar(backgroundColor: AppColours.primaryColor, child: Text(contact.initials())),
+                                  ? CircleAvatar(backgroundColor: AppColors.primaryColor, backgroundImage: MemoryImage(contact.avatar!))
+                                  : CircleAvatar(backgroundColor: AppColors.primaryColor, child: Text(contact.initials())),
                               onTap: () {
                                 if (contact.phones!.length > 0) {
                                   final String phoneNum = contact.phones!.elementAt(0).value!;

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../.utils/Functions.dart';
+import '../../models/location_model.dart';
 
 class MapViewModel extends GetxController {
   /// Declarations
@@ -23,53 +24,19 @@ class MapViewModel extends GetxController {
       speed: 2,
       speedAccuracy: 2);
 
-  RxString currentAddress = "".obs;
+  LatLng currentLatLng = const LatLng(0, 0);
 
-  LocationPermission permission = LocationPermission.always;
+  RxString currentAddress = "".obs;
 
   RxList<Marker> markers = <Marker>[].obs;
 
-  LatLng currentP = const LatLng(0, 0);
-  final LatLng _pGooglePlex = const LatLng(37.4223, -122.0848);
-  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
 
-  /// Functions
-  Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission().then((value) {
-      print(" \n Value: $value \n ");
-    }).onError((error, stackTrace) async {
-      await Geolocator.requestPermission();
-      print(" \n ERROR: $error \n ");
-    });
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    //return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true);
-  }
+  // final LatLng _pGooglePlex = const LatLng(37.4223, -122.0848);
+  // Map<PolylineId, Polyline> polylines = {};
+  // LocationPermission permission = LocationPermission.always;
 
-  // on pressing floating action button the camera will take to user current location
-  // returnToCurrLoc(List<Marker> markers, Completer<GoogleMapController> mapController)
-  returnToCurrLoc(Completer<GoogleMapController> mapController) async {
-    try {
-      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((position) async {
-        currentP = LatLng(position.latitude, position.longitude);
-        print(" \n \n currentPosition; $position  ::   $currentP \n \n ");
-        getAddressFromLatLon();
-
-        // marker added for current users location
-        // markers.add(Marker(
-        //   markerId: const MarkerId("1"),
-        //   position: LatLng(position.latitude, position.longitude),
-        //   infoWindow: const InfoWindow(title: 'My Current Location'),
-        // ));
-
-        // specified current users location
-        CameraPosition cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude), zoom: 14);
-        final GoogleMapController controller = await mapController.future;
-        await controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-      });
-    } catch (e) {
-      print(" \n \n currentPosition Error: ${e.toString()}  \n \n ");
-    }
-  }
+  /// ////////////////////////////////////////   Functions   ////////////////////////////////////////////////////
 
   getCurrentLocation(context) async {
     final hasPermission = await handleLocationPermission(context);
@@ -79,8 +46,15 @@ class MapViewModel extends GetxController {
 //setState(() {
       currentPosition = position;
       print(" \n \n currentPosition; $currentPosition \n \n ");
-      currentP = LatLng(position.latitude, position.longitude);
+      currentLatLng = LatLng(position.latitude, position.longitude);
+
       getAddressFromLatLon();
+      // marker added for current users location
+      markers.add(Marker(
+          markerId: const MarkerId("Current Location"),
+          icon: BitmapDescriptor.defaultMarker,
+          position: currentLatLng,
+          infoWindow: const InfoWindow(title: 'My Position')));
       //});
     }).catchError((e) {
       showToast("getCurrentLocation: ${e.toString()}");
@@ -100,6 +74,31 @@ class MapViewModel extends GetxController {
     }
   }
 
+  // on pressing floating action button the camera will take to user current location
+  // returnToCurrLoc(List<Marker> markers, Completer<GoogleMapController> mapController)
+  returnToCurrLoc(Completer<GoogleMapController> mapController) async {
+    try {
+      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((position) async {
+        currentLatLng = LatLng(position.latitude, position.longitude);
+        print(" \n \n currentPosition; $position  ::   $currentLatLng \n \n ");
+        getAddressFromLatLon();
+
+        // specified current users location
+        CameraPosition cameraPosition = CameraPosition(target: LatLng(position.latitude, position.longitude), zoom: 14);
+        final GoogleMapController controller = await mapController.future;
+        await controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      });
+    } catch (e) {
+      print(" \n \n currentPosition Error: ${e.toString()}  \n \n ");
+    }
+  }
+
+  returnToTargetLoc(Completer<GoogleMapController> mapController, UserLocation location) async {
+    CameraPosition cameraPosition = CameraPosition(target: LatLng(location.latitude, location.longitude), zoom: 14);
+    final GoogleMapController controller = await mapController.future;
+    await controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
+
   Future<bool> handleLocationPermission(context) async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -111,47 +110,51 @@ class MapViewModel extends GetxController {
       return false;
     }
     permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+    if (permission != LocationPermission.always) {
+      permission = await Geolocator.requestPermission(); // ///           /////  requestPermission   /////
       if (permission == LocationPermission.denied) {
         showToast("Location permissions are denied", error: true);
         //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are denied')));
         return false;
       }
+      if (permission == LocationPermission.deniedForever) {
+        showToast("Location permissions are permanently denied, we cannot request permissions.", error: true);
+        //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+        return false;
+      }
     }
-    if (permission == LocationPermission.deniedForever) {
-      showToast("Location permissions are permanently denied, we cannot request permissions.", error: true);
-      //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
-    }
+
     showToast("Location services are enabled");
     return true;
   }
 
-  Future<List<LatLng>> getPolylinePoints() async {
-    List<LatLng> polylineCoordinates = [];
+  // Future<List<LatLng>> getPolylinePoints(UserLocation location) async {
+
+  getPolylinePoints(UserLocation location) async {
     PolylinePoints polylinePoints = PolylinePoints();
+
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       "AIzaSyC_WdqkLQKoxjnUSUVgErrLoecARk430Z4",
-      PointLatLng(currentP.latitude, currentP.longitude),
-      PointLatLng(_pGooglePlex.latitude, _pGooglePlex.longitude),
-      travelMode: TravelMode.walking,
+      PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+      PointLatLng(location.latitude, location.longitude),
+      travelMode: TravelMode.driving,
     );
     if (result.points.isNotEmpty) {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
+      update();
     } else {
       print(result.errorMessage);
     }
-    return polylineCoordinates;
+    // return polylineCoordinates;
   }
 
   // GOOGLE_MAPS_API_KEY = "AIzaSyC_WdqkLQKoxjnUSUVgErrLoecARk430Z4"
 
-  void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
-    PolylineId id = const PolylineId("poly");
-    Polyline polyline = Polyline(polylineId: id, color: Colors.black, points: polylineCoordinates, width: 8);
-    polylines[id] = polyline;
-  }
+  // void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
+  //   PolylineId id = const PolylineId("poly");
+  //   Polyline polyline = Polyline(polylineId: id, color: Colors.black, points: polylineCoordinates, width: 8);
+  //   polylines[id] = polyline;
+  // }
 }

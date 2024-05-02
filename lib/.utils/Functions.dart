@@ -63,7 +63,7 @@ showToast(String message, {bool error = false}) {
 Widget progressIndicator(BuildContext context) {
   return Center(
       child: CircularProgressIndicator(
-    backgroundColor: AppColours.primaryColor,
+    backgroundColor: AppColors.primaryColor,
     color: Colors.red,
     strokeWidth: 7,
   ));

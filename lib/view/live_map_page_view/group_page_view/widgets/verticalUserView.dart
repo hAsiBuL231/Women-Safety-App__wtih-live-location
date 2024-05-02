@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../.resources/colours/app_colours.dart';
 
-
-verticalUserView(){
+verticalUserView() {
   return Container(
     width: double.infinity,
     height: 160,
@@ -31,11 +30,11 @@ verticalUserView(){
                       )),
                   Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                      child: Text('UserName', style: TextStyle(color: AppColours.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
+                      child: Text('UserName', style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
                   Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                       child: Text('Remove',
-                          style: TextStyle(color: AppColours.blackColour, fontSize: 12, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString()))),
+                          style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString()))),
                 ]),
               ))),
       Padding(
@@ -59,11 +58,11 @@ verticalUserView(){
                           fit: BoxFit.cover)),
                   Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                      child: Text('UserName', style: TextStyle(color: AppColours.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
+                      child: Text('UserName', style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
                   Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                       child: Text('Remove',
-                          style: TextStyle(color: AppColours.blackColour, fontSize: 12, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString()))),
+                          style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString()))),
                 ]),
               ))),
       Padding(
@@ -88,11 +87,11 @@ verticalUserView(){
                       )),
                   Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                      child: Text('UserName', style: TextStyle(color: AppColours.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
+                      child: Text('UserName', style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
                   Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                       child: Text('Remove',
-                          style: TextStyle(color: AppColours.blackColour, fontSize: 12, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString()))),
+                          style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontWeight: FontWeight.w800, fontFamily: GoogleFonts.manrope.toString()))),
                 ]),
               ))),
     ]),
