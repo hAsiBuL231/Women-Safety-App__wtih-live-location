@@ -40,9 +40,9 @@ class UserViewModel extends GetxController {
       // "email": emailController.value.text,
       // "name": nameController.value.text,
       // "phone": phoneController.value.text,
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
-      "latitude": 0,
-      "longitude": 0
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg"
+      //"latitude": 0,
+      //"longitude": 0
     };
 
     try {
@@ -93,6 +93,16 @@ class UserViewModel extends GetxController {
 
   Future<void> patchUserNameApi(String name) async {
     Map data = {"name": name};
+
+    try {
+      var response = await _api.patchUserApi(data);
+    } catch (e) {
+      showToast("patchUserNameApi: ${e.toString()}", error: true);
+    }
+  }
+
+  Future<void> patchUserImageApi(String imageUrl) async {
+    Map data = {"imageUrl": imageUrl};
 
     try {
       var response = await _api.patchUserApi(data);

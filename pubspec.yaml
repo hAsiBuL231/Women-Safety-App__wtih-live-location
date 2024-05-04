@@ -85,6 +85,7 @@ dependencies:
   contacts_service: ^0.6.3
   sqflite: ^2.2.0+3
   web_socket_channel: ^2.4.5
+  # stream_chat_flutter: ^7.2.0
 
   webview_flutter_android: any
   path_provider: any

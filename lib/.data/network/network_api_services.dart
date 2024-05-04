@@ -18,7 +18,7 @@ class NetworkApiServices extends BaseApiServices {
         print("Passed url: $url");
         print("Returned statusCode: ${response.statusCode} \n");
         print(response.body);
-        print("\n /////////////////////////////////////////////// NetworkApiServices GetApi Printing ////////////////////////// \n ");
+        print("\n /////////////////////////////////////////////// NetworkApiServices GetApi Printed ////////////////////////// \n ");
       }
       return returnResponse(response);
     } catch (e) {

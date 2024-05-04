@@ -11,7 +11,23 @@ class ListenLocationProvider extends GetxController {
   //final Location location = Location();
   //StreamSubscription<LocationData>? _locationSubscription;
 
+  @override
+  void onReady() {
+    // startTimer();
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+    super.onClose();
+  }
+
   RxBool listen = false.obs;
+  Timer? timer;
+  LocationRepo locationApi = LocationRepo();
 
   final Rx<AndroidSettings> locationSettings = AndroidSettings(
       accuracy: LocationAccuracy.high,
@@ -28,6 +44,7 @@ class ListenLocationProvider extends GetxController {
   // created method for getting user current location
   Future<void> listenLocation(BuildContext context) async {
     if (listen.isTrue) {
+      print("listen location");
       Geolocator.getServiceStatusStream().listen((ServiceStatus status) async {
         if (status == ServiceStatus.disabled) {
           await Geolocator.requestPermission();
@@ -39,7 +56,6 @@ class ListenLocationProvider extends GetxController {
 
       Geolocator.getPositionStream(locationSettings: locationSettings.value).listen((Position? position) {
         print(position == null ? 'Unknown' : '${position.latitude.toString()}, ${position.longitude.toString()}');
-        LocationRepo locationApi = LocationRepo();
 
         if (position != null) {
           Map data = {"latitude": position.latitude, "longitude": position.longitude};
@@ -84,6 +100,34 @@ class ListenLocationProvider extends GetxController {
     //});
   }
 
+  startTimer() {
+    timer = Timer.periodic(
+      const Duration(seconds: 5),
+      (Timer timer) {
+        print("Timer running ${timer.tick}");
+        Geolocator.getServiceStatusStream().listen((ServiceStatus status) async {
+          if (status == ServiceStatus.disabled) {
+            await Geolocator.requestPermission();
+            // await Geolocator.openAppSettings();
+            // await Geolocator.openLocationSettings();
+          }
+          print(" \n  serviceStatusStream: $status \n  ");
+        });
+
+        Geolocator.getPositionStream(locationSettings: locationSettings.value).listen((Position? position) {
+          print(position == null ? 'Unknown' : '${position.latitude.toString()}, ${position.longitude.toString()}');
+
+          if (position != null) {
+            Map data = {"latitude": position.latitude, "longitude": position.longitude};
+
+            /// Implement save data in the server
+            locationApi.patchUserLocationApi(data);
+          }
+        });
+      },
+    );
+  }
+
   // getListing() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   listen.value = prefs.getBool('locPer')!;
@@ -93,12 +137,16 @@ class ListenLocationProvider extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('locPer', true);
     listen.value = true;
+    startTimer();
+    update();
   }
 
   stopListening() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('locPer', false);
     listen.value = false;
+    timer?.cancel();
+    update();
     //_locationSubscription?.cancel();
     //setState(() => _locationSubscription = null);
     //_locationSubscription = null;

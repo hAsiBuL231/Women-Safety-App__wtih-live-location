@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/view_models/home_page_model/HomePageModel.dart';
@@ -9,6 +11,8 @@ import '../../../view_models/map_view_models/listen_location.dart';
 
 final homePageVM = Get.put(HomePageModel());
 final listenLocationVM = Get.put(ListenLocationProvider());
+
+Timer? timer;
 
 Widget radioButton(context) {
   return Obx(
@@ -22,9 +26,18 @@ Widget radioButton(context) {
           homePageVM.switchListTileValue.value = newValue;
           //setState(() => switchListTileValue = newValue);
           if (newValue == true) {
+            print("newValue == true");
+            // timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+            //   print("newValue == true");
+            //   listenLocationVM.listenLocation(context);
+            // });
             listenLocationVM.startListening();
-            listenLocationVM.listenLocation(context);
+            // listenLocationVM.startTimer();
+            // listenLocationVM.listenLocation(context);
           } else {
+            print("newValue == false");
+            timer?.cancel();
+            // listenLocationVM.timer?.cancel();
             listenLocationVM.stopListening();
           }
         },

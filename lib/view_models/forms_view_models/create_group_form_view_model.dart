@@ -5,6 +5,7 @@ import 'package:flutter_women_safety_app/.data/network/network_api_services.dart
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.resources/app_url/AppUrl.dart';
@@ -32,7 +33,7 @@ class CreateGroupFormViewModel extends GetxController {
 
         Map data = {
           "name": groupNameController.value.text,
-          "imageUrl": "imageUrl",
+          "imageUrl": imageUrl.value,
           "users": ["${AppUrl.usersUrl}$securityCode/"]
           //"users": [provider.userData],
         };
@@ -87,6 +88,25 @@ class CreateGroupFormViewModel extends GetxController {
 
     if (pickedFile != null) {
       try {
+        XFile image = XFile(pickedFile.path);
+        print('Image uploading');
+
+        var request = http.MultipartRequest('POST', Uri.parse('${AppUrl.baseUrl}/image/upload/'));
+        request.files.add(await http.MultipartFile.fromPath('image', image.path));
+        var response = await request.send();
+        if (response.statusCode == 200) {
+          // Image uploaded successfully
+          print('Image uploaded successfully');
+          // You can get the image path from the response
+          String imagePath = await response.stream.bytesToString();
+          var image = jsonDecode(imagePath);
+          imageUrl.value = "${AppUrl.baseUrl}/image/get/${image['image_path']}/";
+          print('Image Path: $imagePath');
+        } else {
+          // Image uploading failed
+          print('Image uploading failed');
+        }
+
         // final Reference storageReference = FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}');
         // final UploadTask uploadTask = storageReference.putFile(File(pickedFile.path));
         // await uploadTask.whenComplete(() => showToast('Photo uploaded. Wait to load the image.'));

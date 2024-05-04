@@ -50,6 +50,15 @@ class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> mapController = Completer<GoogleMapController>();
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    locationVM.markers.clear();
+    locationVM.polylineCoordinates.clear();
+    // locationVM.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     UserLocation? userLocation;
     return Scaffold(

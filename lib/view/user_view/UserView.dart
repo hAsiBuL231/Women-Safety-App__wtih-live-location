@@ -5,8 +5,10 @@ import 'package:flutter_women_safety_app/.utils/Functions.dart';
 import 'package:flutter_women_safety_app/view/Authentication/login_view/LoginPageView.dart';
 import 'package:flutter_women_safety_app/view_models/user_view_model/UserViewModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../components/GetImage.dart';
 import '../../components/buttons/SecondaryButton.dart';
 import '../../models/user_model.dart';
+import '../ChatApp/image.dart';
 import 'widgets/display_image_widget.dart';
 
 import 'pages/edit_email.dart';
@@ -78,7 +80,7 @@ class _UserViewState extends State<UserView> {
                               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: Color.fromRGBO(64, 105, 225, 1)),
                             ))),
                     InkWell(
-                        onTap: () => navigateSecondPage(const EditImagePage(), context),
+                        onTap: () => navigateSecondPage(const GetImage(), context),
                         child: DisplayImage(
                           imagePath: user.imageUrl,
                           onPressed: () {},
@@ -94,7 +96,7 @@ class _UserViewState extends State<UserView> {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.clear();
                           newPage(const LoginPageView(), context);
-                        })
+                        }),
                   ])),
             );
           }

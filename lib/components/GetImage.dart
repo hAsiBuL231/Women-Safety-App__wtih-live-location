@@ -1,10 +1,15 @@
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_women_safety_app/view/user_view/UserView.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_women_safety_app/.resources/app_url/AppUrl.dart';
+import 'package:http/http.dart' as http;
 
 import '../.utils/Functions.dart';
 import '../view/forms/UserForm.dart';
+import '../view_models/user_view_model/UserViewModel.dart';
 
 class GetImage extends StatefulWidget {
   const GetImage({super.key});
@@ -40,6 +45,8 @@ class _GetImageState extends State<GetImage> {
       showToast('Image Picking Failed');
       return;
     }
+    XFile image = XFile(croppedFile.path);
+    _uploadImage(image);
 
     // try {
     //   final Reference storageReference = FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}');
@@ -64,6 +71,26 @@ class _GetImageState extends State<GetImage> {
     // });
   }
 
+  Future<void> _uploadImage(XFile _image) async {
+    var request = http.MultipartRequest('POST', Uri.parse('${AppUrl.baseUrl}/image/upload/'));
+    request.files.add(await http.MultipartFile.fromPath('image', _image.path));
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      // Image uploaded successfully
+      print('Image uploaded successfully');
+      // You can get the image path from the response
+      String imagePath = await response.stream.bytesToString();
+      var image = jsonDecode(imagePath);
+      setState(() {
+        imageURL = "${AppUrl.baseUrl}/image/get/${image['image_path']}/";
+      });
+      print('Image Path: $imagePath');
+    } else {
+      // Image uploading failed
+      print('Image uploading failed');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +102,7 @@ class _GetImageState extends State<GetImage> {
                     child: Column(children: [
                       if (imageURL == '')
                         Column(children: [
-                          const CircleAvatar(radius: 100, backgroundImage: AssetImage('Assets/profile.jpg')),
+                          const CircleAvatar(radius: 100, backgroundImage: AssetImage('Assets/images/Profile.png')),
                           const SizedBox(height: 30),
                           TextButton(onPressed: () => showImagePicker(context), child: const Text('Select Image'))
                         ])
@@ -91,7 +118,12 @@ class _GetImageState extends State<GetImage> {
                               decoration: const ShapeDecoration(shape: CircleBorder(side: BorderSide(color: Colors.blue, width: 10))),
                               child: CircleAvatar(radius: 130, backgroundImage: NetworkImage(imageURL))),
                           const SizedBox(height: 30),
-                          FilledButton(onPressed: () => nextPage(const UserForm(), context), child: const Text('OK', style: TextStyle(fontSize: 20))),
+                          FilledButton(
+                              onPressed: () async {
+                                await UserViewModel().patchUserImageApi(imageURL);
+                                nextPage(const UserView(), context);
+                              },
+                              child: const Text('OK', style: TextStyle(fontSize: 20))),
                           const SizedBox(height: 30),
                           TextButton(onPressed: () => showImagePicker(context), child: const Text('Select Again!'))
                         ])

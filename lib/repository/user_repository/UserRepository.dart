@@ -23,7 +23,7 @@ class UserRepository {
     // Users user = await prefs.get("user");
     // String? securityCode = UserDataProvider().userData?.securityCode;
 
-    dynamic response = await _apiServices.getApi("${AppUrl.usersUrl}$token");
+    dynamic response = await _apiServices.getApi("${AppUrl.usersUrl}$token/");
     String jsonResponse = json.encode(response);
 
     // if (kDebugMode) {
