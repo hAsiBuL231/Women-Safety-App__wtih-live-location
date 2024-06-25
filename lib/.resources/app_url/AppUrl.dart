@@ -2,9 +2,11 @@ class AppUrl {
 
   // static const String baseUrl = "http://127.0.0.1:8000";
   // static const String baseUrl = "http://10.0.2.2:8000";
+  // https://hasib.pythonanywhere.com/
+  //static const String baseUrl = "https://hasib.pythonanywhere.com";
 
 
-   static const String baseUrl = "http://192.168.0.110:8000"; /// Mess Wifi
+   static const String baseUrl = "http://192.168.0.115:8000"; /// Mess Wifi
   // static const String baseUrl = "http://192.168.0.108:8000"; /// basha
   ///  192.168.42.172
   // static const String baseUrl = "http://192.168.42.172:8000"; /// mobile
@@ -28,5 +30,6 @@ class AppUrl {
 
   static const String locationUrl = '$baseUrl/locations/';
 
+   static const String sos_history = '$baseUrl/soshistory/';
 
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '.data/user_data_SharedPreferences/app_user_data.dart';
@@ -6,6 +7,8 @@ import 'components/Dragabble FAB.dart';
 import 'view/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Geolocator.getPositionStream();
   runApp(const MyApp());
 }
 

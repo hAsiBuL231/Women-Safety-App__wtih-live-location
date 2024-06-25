@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_women_safety_app/.utils/Functions.dart';
+import 'package:flutter_women_safety_app/components/customText.dart';
 import 'package:flutter_women_safety_app/view/Authentication/login_view/LoginPageView.dart';
 import 'package:flutter_women_safety_app/view_models/user_view_model/UserViewModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,7 @@ import '../../components/GetImage.dart';
 import '../../components/buttons/SecondaryButton.dart';
 import '../../models/user_model.dart';
 import '../ChatApp/image.dart';
+import 'Admin View Pages/SOSHistoryPage.dart';
 import 'widgets/display_image_widget.dart';
 
 import 'pages/edit_email.dart';
@@ -97,6 +99,14 @@ class _UserViewState extends State<UserView> {
                           prefs.clear();
                           newPage(const LoginPageView(), context);
                         }),
+
+                    /// //////////////////////////////  Admin Section ////////////////////////////
+                    if (user.email == "hossainhasibul2@gmail.com") ...[
+                      const SizedBox(height: 40),
+                      customText(text: "Admin Section:", fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                      const SizedBox(height: 6),
+                      SecondaryButton(title: "See SOS History", onPressed: () => nextPage(const SOSHistoryPage(), context)),
+                    ]
                   ])),
             );
           }

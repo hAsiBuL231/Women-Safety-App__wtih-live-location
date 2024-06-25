@@ -8,6 +8,7 @@ import '../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../.utils/Functions.dart';
 import '../../repository/location_repo/LocationRepo.dart';
 import '../../repository/login_repository/LoginRepository.dart';
+import '../../repository/sos_history_repo/SOSHistoryRepo.dart';
 import '../user_view_model/UserViewModel.dart';
 
 class SignUpViewModel extends GetxController {
@@ -46,13 +47,16 @@ class SignUpViewModel extends GetxController {
 
       if (token != '') {
         snackBar('Login successful', context);
-        UserViewModel repo2 = UserViewModel();
 
+        UserViewModel repo2 = UserViewModel();
         var response2 = await repo2.postUserApi(context);
 
         LocationRepo repo3 = LocationRepo();
-
         var response3 = await repo3.postUserLocationApi(context);
+
+        SOSHistoryRepo repo4 = SOSHistoryRepo();
+        var response4 = await repo4.postUserSOSHistoryApi();
+
 
         Get.delete<SignUpViewModel>();
         nextPage(const SplashScreen(), context);

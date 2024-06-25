@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:background_sms/background_sms.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,7 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shake/shake.dart';
+import '../../../.data/user_data_SharedPreferences/app_user_data.dart';
 import '../../../.utils/Functions.dart';
+import '../../../repository/sos_history_repo/SOSHistoryRepo.dart';
 import 'ContactModel.dart';
 
 class SmsModel extends GetxController {
@@ -70,23 +74,51 @@ class SmsModel extends GetxController {
       //Fluttertoast.showToast(msg: "Emergency contact");
 
       Position? currentPosition;
-      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true).then((Position position) {
+      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true)
+          .then((Position position) {
         currentPosition = position;
         showToast("CurrentPosition: ${currentPosition.toString()}");
       }).catchError((e) {
         showToast("CurrentLocation Error: ${e.toString()}", error: true);
       });
 
-      List<Placemark> placeMarks = await placemarkFromCoordinates(currentPosition!.latitude, currentPosition!.longitude);
+      List<Placemark> placeMarks =
+          await placemarkFromCoordinates(currentPosition!.latitude, currentPosition!.longitude);
 
       Placemark place = placeMarks[0];
       String currentAddress = "Locality: ${place.locality}, Postal Code${place.postalCode}, Street: ${place.street}";
+
+      currentPosition ??= await Geolocator.getLastKnownPosition();
 
       //showToast("_curentPosition: ${_curentPosition.latitude}%2C${_curentPosition.longitude} . _curentAddress: $_curentAddress");
       String messageBody =
           "https://www.google.com/maps/search/?api=AIzaSyC_WdqkLQKoxjnUSUVgErrLoecARk430Z4&query=${currentPosition!.latitude}%2C${currentPosition!.longitude} . $currentAddress";
 
       showToast(messageBody);
+
+      Prefs prefs = Prefs();
+      String token = await prefs.get(prefs.token);
+      String username = await prefs.get(prefs.username);
+      String useremail = await prefs.get(prefs.email);
+      int usernumber = await prefs.getInt(prefs.user_number);
+
+
+
+      Position? position = await Geolocator.getLastKnownPosition();
+      Map data = {
+        "token": token,
+        "name": username,
+        "email": useremail,
+        "number": usernumber,
+        "location": messageBody,
+        "latitude": position!.latitude,
+        "longitude": position.longitude,
+        "phone_numbers": contactList.toString()
+      };
+
+      SOSHistoryRepo repo4 = SOSHistoryRepo();
+      var response4 = await repo4.postUserSOSHistoryApi();
+      var response5 = await repo4.patchUserSOSHistoryApi(data);
 
       requestSMSPermission();
       if (await isPermissionGranted()) {

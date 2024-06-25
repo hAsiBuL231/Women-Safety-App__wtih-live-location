@@ -19,21 +19,24 @@ class ListenLocationProvider extends GetxController {
 
   @override
   void onClose() {
-    if (timer != null) {
-      timer!.cancel();
-    }
+    //if (timer != null) {
+    //  timer!.cancel();
+    //}
+    _positionStreamSubscription?.cancel();
+    listen.value = false;
     super.onClose();
   }
 
   RxBool listen = false.obs;
-  Timer? timer;
+  //Timer? timer;
   LocationRepo locationApi = LocationRepo();
+  StreamSubscription<Position>? _positionStreamSubscription;
 
   final Rx<AndroidSettings> locationSettings = AndroidSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
       // forceLocationManager: true,
-      intervalDuration: const Duration(seconds: 2),
+      intervalDuration: const Duration(seconds: 50),
       //(Optional) Set foreground notification config to keep the app alive when going to the background
       foregroundNotificationConfig: const ForegroundNotificationConfig(
         notificationText: "TrackLive app will continue to receive your location even when you aren't using it",
@@ -42,7 +45,7 @@ class ListenLocationProvider extends GetxController {
       )).obs;
 
   // created method for getting user current location
-  Future<void> listenLocation(BuildContext context) async {
+  /*Future<void> listenLocation(BuildContext context) async {
     if (listen.isTrue) {
       print("listen location");
       Geolocator.getServiceStatusStream().listen((ServiceStatus status) async {
@@ -98,11 +101,11 @@ class ListenLocationProvider extends GetxController {
     // //}
     // //showToast('_listenLocation Successful');
     //});
-  }
+  }*/
 
-  startTimer() {
+  /*startTimer() {
     timer = Timer.periodic(
-      const Duration(seconds: 5),
+      const Duration(minutes: 1),
       (Timer timer) {
         print("Timer running ${timer.tick}");
         Geolocator.getServiceStatusStream().listen((ServiceStatus status) async {
@@ -120,13 +123,60 @@ class ListenLocationProvider extends GetxController {
           if (position != null) {
             Map data = {"latitude": position.latitude, "longitude": position.longitude};
 
+            print("getPositionStream: ${data}");
+
             /// Implement save data in the server
             locationApi.patchUserLocationApi(data);
           }
+        }, onError: (error) {
+          print("getPositionStream: failed with error: $error");
         });
+        //print("getPositionStream: failed");
+        ///////// function end ////
       },
     );
+  }*/
+
+  void startRepeatedTask() {
+    const duration = Duration(seconds: 50);
+
+    void callTask() async {
+      if (!listen.value) return; // Stop if flag is false
+      await Future.delayed(duration);
+      task();
+      callTask();
+    }
+
+    callTask();
   }
+
+  void task() {
+    Geolocator.getServiceStatusStream().listen((ServiceStatus status) async {
+      if (status == ServiceStatus.disabled) {
+        await Geolocator.requestPermission();
+        // await Geolocator.openAppSettings();
+        // await Geolocator.openLocationSettings();
+      }
+      print(" \n  serviceStatusStream: $status \n  ");
+    });
+
+    _positionStreamSubscription = Geolocator.getPositionStream(locationSettings: locationSettings.value).listen((Position? position) async {
+      print(position == null ? 'Unknown' : '${position.latitude.toString()}, ${position.longitude.toString()}');
+
+      if (position != null) {
+        Map data = {"latitude": position.latitude, "longitude": position.longitude};
+
+        print("getPositionStream: ${data}");
+
+        /// Implement save data in the server
+        await Future.delayed(const Duration(seconds: 50));
+        await locationApi.patchUserLocationApi(data);
+      }
+    }, onError: (error) {
+      print("getPositionStream: failed with error: $error");
+    });
+  }
+
 
   // getListing() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -137,15 +187,19 @@ class ListenLocationProvider extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('locPer', true);
     listen.value = true;
-    startTimer();
+    startRepeatedTask();
     update();
   }
 
   stopListening() async {
+    // if (timer != null) {
+    //   timer!.cancel();
+    // }
+    _positionStreamSubscription?.cancel();
+    onClose();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('locPer', false);
     listen.value = false;
-    timer?.cancel();
     update();
     //_locationSubscription?.cancel();
     //setState(() => _locationSubscription = null);

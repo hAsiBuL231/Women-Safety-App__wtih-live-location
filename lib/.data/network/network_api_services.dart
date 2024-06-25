@@ -121,7 +121,8 @@ class NetworkApiServices extends BaseApiServices {
         Uri.parse(url),
         body: data,
         headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
-      ).timeout(Duration(seconds: 10));
+      );
+      //.timeout(Duration(seconds: 10));
 
       if (kDebugMode) {
         print("\n /////////////////////////////////////////////// NetworkApiServices PatchApi Printing ////////////////////////// \n ");

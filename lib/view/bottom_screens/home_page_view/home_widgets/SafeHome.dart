@@ -122,6 +122,7 @@ class _SafeHomeState extends State<SafeHome> {
                   onPressed: () async {
                     String recipients = "";
                     Fluttertoast.showToast(msg: "Alert sent!");
+                    smsVm.getAndSendSMS();
                     // List<TContact> contactList = await DatabaseHelper().getContactList();
                     // print(contactList.length);
                     // if (contactList.isEmpty) {

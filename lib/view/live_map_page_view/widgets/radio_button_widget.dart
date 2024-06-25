@@ -12,7 +12,6 @@ import '../../../view_models/map_view_models/listen_location.dart';
 final homePageVM = Get.put(HomePageModel());
 final listenLocationVM = Get.put(ListenLocationProvider());
 
-Timer? timer;
 
 Widget radioButton(context) {
   return Obx(
@@ -31,13 +30,14 @@ Widget radioButton(context) {
             //   print("newValue == true");
             //   listenLocationVM.listenLocation(context);
             // });
+            listenLocationVM.listen.value = true;
             listenLocationVM.startListening();
             // listenLocationVM.startTimer();
             // listenLocationVM.listenLocation(context);
           } else {
             print("newValue == false");
-            timer?.cancel();
             // listenLocationVM.timer?.cancel();
+            listenLocationVM.listen.value = false;
             listenLocationVM.stopListening();
           }
         },

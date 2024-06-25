@@ -10,6 +10,7 @@ class Prefs {
   String token = "token";
   String email = "email";
   String pass = "password";
+  String user_number = "phone_number";
 
   // Future<String> getName() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,6 +30,16 @@ class Prefs {
   void set(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
+  }
+
+  Future<int> getInt(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key) ?? 01;
+  }
+
+  void setInt(String key, int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key, value);
   }
 }
 

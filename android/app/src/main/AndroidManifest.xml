@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
-        android:label="flutter_women_safety_app"
+        android:label="Shake2Safety"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

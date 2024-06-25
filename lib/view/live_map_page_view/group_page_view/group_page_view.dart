@@ -24,6 +24,7 @@ class GroupPageView extends StatefulWidget {
 
 class _GroupPageViewState extends State<GroupPageView> {
   List<Map<String, dynamic>> usersData = [];
+  List<Map<String, dynamic>> filteredUsers = [];
 
   @override
   void initState() {
@@ -48,6 +49,19 @@ class _GroupPageViewState extends State<GroupPageView> {
         print('Failed to fetch user data from URL: $userUrl');
       }
     }
+    filteredUsers = usersData;
+  }
+
+  void filterUsers(String query) {
+    List<Map<String, dynamic>> filtered = usersData.where((user) {
+      return user["name"].toLowerCase().contains(query.toLowerCase()) ||
+          user["email"].toLowerCase().contains(query.toLowerCase()) ||
+          user["phone"].toString().contains(query);
+    }).toList();
+
+    setState(() {
+      filteredUsers = filtered;
+    });
   }
 
   @override
@@ -58,16 +72,105 @@ class _GroupPageViewState extends State<GroupPageView> {
         onRefresh: _refreshData,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             const SizedBox(height: 10),
             //customButton(onPress: () {}, bgColor: Colors.black,width: 200,text: "Create New Group"),
-            searchButton(),
+            //searchButton(),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 12),
+              child: Row(mainAxisSize: MainAxisSize.max, children: [
+                Expanded(
+                    child: TextFormField(
+                        //controller: _model.textController,
+                        //focusNode: _model.textFieldFocusNode,
+                        onChanged: (_value) => filterUsers(_value),
+                        onFieldSubmitted: (_value) async => filterUsers(_value),
+                        //autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Search members...',
+                          enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.white, width: 2), borderRadius: BorderRadius.circular(12)),
+                          focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 2), borderRadius: BorderRadius.circular(12)),
+                          errorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red, width: 2), borderRadius: BorderRadius.circular(12)),
+                          focusedErrorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red, width: 2), borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          //fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                        ))),
+                Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0), child: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.search_rounded))),
+              ]),
+            ),
             const Padding(
               padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
               child: Text('Members in Group'),
             ),
-            verticalUserView(),
+            //verticalUserView(),
 
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: filteredUsers.map((e) {
+                    return Padding(
+                        padding: const EdgeInsetsDirectional.all(12),
+                        child: Container(
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: const [BoxShadow(blurRadius: 4, color: Color(0x34090F13), offset: Offset(0, 2))],
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                                ClipRRect(borderRadius: BorderRadius.circular(50), child: Image.network(e['imageUrl'], width: 60, height: 60, fit: BoxFit.cover)),
+                                Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                                    child: Text(e['name'], style: TextStyle(color: AppColors.blackColour, fontSize: 12, fontFamily: GoogleFonts.manrope.toString()))),
+                              ]),
+                            )));
+                  }).toList()),
+            ),
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   padding: EdgeInsets.zero,
+            //   scrollDirection: Axis.horizontal,
+            //   itemCount: usersData.length,
+            //   itemBuilder: (context, index) {
+            //     final userData = usersData[index];
+            //     return Padding(
+            //         padding: const EdgeInsetsDirectional.all(12),
+            //         child: Container(
+            //             width: 100,
+            //             decoration: BoxDecoration(
+            //                 color: Colors.white,
+            //                 boxShadow: const [BoxShadow(blurRadius: 4, color: Color(0x34090F13), offset: Offset(0, 2))],
+            //                 borderRadius: BorderRadius.circular(8)),
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(12),
+            //               child: Column(
+            //                   mainAxisSize: MainAxisSize.max,
+            //                   mainAxisAlignment: MainAxisAlignment.center,
+            //                   children: <Widget>[
+            //                     ClipRRect(
+            //                         borderRadius: BorderRadius.circular(50),
+            //                         child:
+            //                             Image.network(userData['imageUrl'], width: 60, height: 60, fit: BoxFit.cover)),
+            //                     Padding(
+            //                         padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+            //                         child: Text(userData['name'],
+            //                             style: TextStyle(
+            //                                 color: AppColors.blackColour,
+            //                                 fontSize: 12,
+            //                                 fontFamily: GoogleFonts.manrope.toString()))),
+            //                   ]),
+            //             )));
+            //     return customListTile(
+            //         title: userData['name'],
+            //         imageUrl: userData['imageUrl'],
+            //         subTitle: 'See live location..',
+            //         onPress: () => nextPage(MapPage(securityCode: userData['securityCode']), context));
+            //   },
+            // ),
             const Padding(
               padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
               child: Text('Members list'),

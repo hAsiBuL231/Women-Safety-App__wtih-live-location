@@ -43,6 +43,7 @@ class LoginRepository {
       prefs.set(prefs.username, data['username']);
       prefs.set(prefs.token, response['token']);
       prefs.set(prefs.email, response['user']['email']);
+      prefs.setInt(prefs.user_number, response['user']['phone']);
     } catch (e) {
       showToast("Failed to save preferences: $e", error: true);
     }
