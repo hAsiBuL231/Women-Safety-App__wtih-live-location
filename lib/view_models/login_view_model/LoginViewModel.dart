@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../.utils/Functions.dart';
@@ -48,6 +47,8 @@ class LoginViewModel extends GetxController {
       snackBar('Login successful', context);
 
       Get.delete<LoginViewModel>();
+
+      await Future.delayed(const Duration(seconds: 10));
       nextPage(const SplashScreen(), context);
       // nextPage(const BottomPage(), context);
     } catch (e) {

@@ -44,8 +44,8 @@ class SOSHistoryRepo {
       "email": useremail,
       "number": usernumber,
       "location": "location",
-      "latitude": position!.latitude,
-      "longitude": position.longitude,
+      "latitude": position?.latitude ?? 98.0,
+      "longitude": position?.longitude ?? 98.0,
       "phone_numbers": "phoneNumbers"
     };
     try {

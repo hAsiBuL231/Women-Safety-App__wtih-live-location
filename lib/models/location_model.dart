@@ -19,7 +19,7 @@ class UserLocation {
 
   factory UserLocation.fromJson(Map<String, dynamic> json) {
     return UserLocation(
-      url: json['url'],
+      url: json['securityCode'],
       created: DateTime.parse(json['created']),
       updated: DateTime.parse(json['updated']),
       taker: json['taker'],

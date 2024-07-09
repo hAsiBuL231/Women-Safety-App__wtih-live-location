@@ -30,13 +30,15 @@ class UserViewModel extends GetxController {
     Prefs prefs = Prefs();
     String token = await prefs.get(prefs.token);
     String email = await prefs.get(prefs.email);
+    String name = await prefs.get(prefs.username);
+    int phone = await prefs.getInt(prefs.user_number);
 
     // loading.value = true;
     Map data = {
       "token": token,
       "email": email,
-      "name": "Please enter your name",
-      "phone": 018,
+      "name": name,
+      "phone": phone,
       // "email": emailController.value.text,
       // "name": nameController.value.text,
       // "phone": phoneController.value.text,

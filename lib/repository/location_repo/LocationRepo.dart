@@ -36,7 +36,7 @@ class LocationRepo {
 
     Position? position = await Geolocator.getLastKnownPosition();
 
-    Map data = {"token": token, "taker": username, "message": "Please enter your name", "latitude": position!.latitude, "longitude": position.longitude};
+    Map data = {"token": token, "taker": username, "message": "message", "latitude": position?.latitude ?? 98.0, "longitude": position?.longitude ?? 98.0};
     try {
       String jsonData = json.encode(data);
       dynamic response = await _apiServices.postApi(jsonData, AppUrl.locationUrl);

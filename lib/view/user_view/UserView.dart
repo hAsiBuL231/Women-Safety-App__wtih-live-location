@@ -88,7 +88,7 @@ class _UserViewState extends State<UserView> {
                           onPressed: () {},
                         )),
                     buildUserInfoDisplay(user.name, 'Name', EditNameFormPage(refreshCallback: refreshScreen), context),
-                    buildUserInfoDisplay("${user.phone}", 'Phone', EditPhoneFormPage(refreshCallback: refreshScreen), context),
+                    buildUserInfoDisplay("0${user.phone}", 'Phone', EditPhoneFormPage(refreshCallback: refreshScreen), context),
                     buildUserInfoDisplay(user.email, 'Email', const EditEmailFormPage(), context),
                     // Expanded(flex: 4, child: buildAbout(user)),
                     const SizedBox(height: 100),

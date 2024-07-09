@@ -177,7 +177,6 @@ class ListenLocationProvider extends GetxController {
     });
   }
 
-
   // getListing() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   listen.value = prefs.getBool('locPer')!;

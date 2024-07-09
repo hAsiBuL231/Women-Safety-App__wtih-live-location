@@ -94,6 +94,24 @@ class _SignUpPageViewState extends State<SignUpPageView> {
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))))),
                   const SizedBox(height: 20),
                   Obx(() => TextFormField(
+                      controller: signUpVM.phoneController.value,
+                      focusNode: signUpVM.phoneFocusNode.value,
+                      validator: (input) {
+                        if (input!.length < 11 && !input.isPhoneNumber) {
+                          return 'Please enter valid phone number';
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (value) => Utils.fieldFocusChange(context, signUpVM.phoneFocusNode.value, signUpVM.passwordFocusNode.value),
+                      decoration: InputDecoration(
+                          hintText: 'Phone Number',
+                          labelText: 'Phone Number',
+                          fillColor: Colors.white70,
+                          filled: true,
+                          prefixIcon: const Icon(Icons.phone, color: Colors.white),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))))),
+                  const SizedBox(height: 20),
+                  Obx(() => TextFormField(
                       controller: signUpVM.passwordController.value,
                       focusNode: signUpVM.passwordFocusNode.value,
                       validator: (input) {
